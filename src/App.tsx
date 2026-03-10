@@ -1,10 +1,13 @@
-import './App.css'
+import '~shared/config/i18n';
+import Routes from '~shared/config/routes';
+import {ThemeProvider} from '~shared/providers/Theme';
 
 function App() {
-
   return (
-    <div>Hello world</div>
-  )
+    <ThemeProvider>
+      <Routes />
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;

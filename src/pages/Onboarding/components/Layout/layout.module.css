@@ -1,0 +1,13 @@
+.layout {
+    height: 100vh;
+    width: 100vw;
+    position: relative;
+    overflow: hidden;
+
+    background-color: white;
+}
+
+.children{
+    max-width: 600px;
+    margin: 0 auto;
+}
