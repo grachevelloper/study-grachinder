@@ -1,16 +1,30 @@
 import {Col, Flex, Image, Row} from 'antd';
-import {Fragment} from 'react';
+import {Fragment, useEffect} from 'react';
 import layoutImg from '~assets/layout.png';
 
 import styles from './auth-layout.module.css';
 import {Outlet, useLocation} from 'react-router-dom';
 import {useLocalStorage} from '~shared/hooks/useLocalStorage';
 import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
+import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
 
 export const AuthLayout = () => {
   const location = useLocation();
-  const [step, _] = useLocalStorage<number>(ONBOARDING_STEP_COUNT_KEY);
+  const [step, setStep] = useLocalStorage<number>(ONBOARDING_STEP_COUNT_KEY);
   const isUserMeta = location.pathname === '/auth/signup' && step >= 1;
+
+  useEffect(() => {
+    const handleSignStepChange = (newStep: number) => {
+      if (newStep !== step) {
+        setStep(newStep);
+      }
+    };
+
+    AuthEmitter.on(AUTH_EVENT, handleSignStepChange);
+    return () => {
+      AuthEmitter.off(AUTH_EVENT, handleSignStepChange);
+    };
+  }, [setStep, AuthEmitter]);
 
   return (
     <Fragment>

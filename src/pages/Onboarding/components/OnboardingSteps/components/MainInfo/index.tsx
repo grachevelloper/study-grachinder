@@ -5,11 +5,18 @@ import {Fragment} from 'react';
 import type {StepProps} from '../../types';
 
 import styles from './mainInfo.module.css';
+import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
 
 const {Title, Text} = Typography;
 
 export const MainInfo = ({loading, onSumbit}: StepProps) => {
   const {t} = useTranslation('auth');
+
+  const handleSubmit = async () => {
+    await onSumbit();
+    AuthEmitter.emit(AUTH_EVENT, (prev: number) => (prev = 1));
+  };
+
   return (
     <Fragment>
       <Flex
@@ -49,7 +56,7 @@ export const MainInfo = ({loading, onSumbit}: StepProps) => {
         size='large'
         color='primary'
         className={styles.button}
-        onClick={onSumbit}
+        onClick={handleSubmit}
         loading={loading}
       >
         {t('auth.registration.apply')}
