@@ -17,7 +17,9 @@ const lightTheme: CustomThemeConfig = {
     name: 'light',
     token: {
         colorInfo: '#3b82f6',
+        colorPrimary: '#BC203C',
         colorBgBase: '#ffffff',
+        fontSize: 16,
         fontFamily: 'Monomakh, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
     },
     components: {

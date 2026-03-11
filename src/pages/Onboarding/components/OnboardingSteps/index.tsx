@@ -1,9 +1,8 @@
-import {Flex, Form, Input} from 'antd';
-import {useCallback, useState} from 'react';
-import {useTranslation} from 'react-i18next';
+import {Flex, Form} from 'antd';
+import {useCallback} from 'react';
 import {useLocalStorage} from '~shared/hooks/useLocalStorage';
 import {MainInfo} from './components/MainInfo';
-import {ONBOARDING_STEP_COUNT_KEY} from './constants';
+import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
 
 import styles from './onboarding-steps.module.css';
 
@@ -17,7 +16,20 @@ export const OnboadringSteps = () => {
   const renderFormField = useCallback(() => {
     switch (stepCount) {
       case 0: {
-        return <MainInfo />;
+        return (
+          <MainInfo
+            onSumbit={() => setStepCount((prev) => prev + 1)}
+            loading={false}
+          />
+        );
+      }
+      case 1: {
+        return (
+          <MainInfo
+            onSumbit={() => setStepCount((prev) => prev + 1)}
+            loading={false}
+          />
+        );
       }
     }
   }, []);
