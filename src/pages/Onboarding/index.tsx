@@ -1,12 +1,15 @@
 import {useAuth} from '~shared/providers/Auth';
 import {OnboadringSteps} from './components/OnboardingSteps';
 import {Button, Flex, FloatButton, notification, theme, Typography} from 'antd';
-import {Fragment, useEffect, useMemo} from 'react';
+import {useEffect, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {LoginOutlined} from '@ant-design/icons';
 import {useSessionStorage} from '~shared/hooks/useSessionStorage';
 import {NOTIFICATION_AUTH_SHOWED} from './constants';
+import {Preview} from './components/Preview';
+
+import styles from './onboadring.module.css';
 
 const {Title, Text} = Typography;
 
@@ -84,10 +87,15 @@ export default () => {
   }, [user, isNotificationShowed]);
 
   return (
-    <Fragment>
+    <Flex
+      className={styles.onboadrind}
+      justify='space-between'
+      align='flex-start'
+    >
       {contextHolder}
       <OnboadringSteps />
+      <Preview name='' gender='male' />
       {renderFloatButtonToSignIn}
-    </Fragment>
+    </Flex>
   );
 };

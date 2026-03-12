@@ -11,8 +11,9 @@ import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
 export const AuthLayout = () => {
   const location = useLocation();
   const [step, setStep] = useLocalStorage<number>(ONBOARDING_STEP_COUNT_KEY);
-  const isUserMeta = location.pathname === '/auth/signup' && step >= 1;
 
+  const isUserMeta = location.pathname === '/auth/signup' && step >= 1;
+  console.log(isUserMeta, step);
   useEffect(() => {
     const handleSignStepChange = (newStep: number) => {
       if (newStep !== step) {
@@ -29,8 +30,8 @@ export const AuthLayout = () => {
   return (
     <Fragment>
       <Row justify='center' align='middle' className={styles.layout}>
-        <Col flex={1}>
-          <Flex justify='end'>
+        <Col>
+          <Flex justify='end' className={styles.image_wrapper}>
             <Image
               src={layoutImg}
               preview={false}
@@ -40,14 +41,14 @@ export const AuthLayout = () => {
             />
           </Flex>
         </Col>
-        <Col flex={14} className={styles.children_wrapper}>
+        <Col flex={1} className={styles.children_wrapper}>
           <Flex
             vertical
             justify={isUserMeta ? 'start' : 'center'}
             align={isUserMeta ? 'top' : 'middle'}
             className={styles.children}
             style={{
-              margin: isUserMeta ? '80px' : '25% auto 0',
+              margin: isUserMeta ? '50px 0 0 40px' : '15% auto 0 ',
             }}
           >
             <Outlet />

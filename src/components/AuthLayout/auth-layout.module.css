@@ -9,9 +9,15 @@
 .children_wrapper{
     position: relative;
     height: 100%;
+    width: max-content;
 }
 
 .children{
-    max-width: 600px;
+    width: 100%;
+}
+
+.image_wrapper{
+    height: 100vh;
+    width: 275px;
 }
 

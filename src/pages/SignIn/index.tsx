@@ -1,7 +1,6 @@
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
 import {Flex, Input, Button, Typography} from 'antd';
 import {useTranslation} from 'react-i18next';
-import {Fragment} from 'react/jsx-runtime';
 
 import styles from './signin.module.css';
 import {useNavigate} from 'react-router-dom';

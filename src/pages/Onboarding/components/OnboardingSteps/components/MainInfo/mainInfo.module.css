@@ -1,16 +1,58 @@
-.text_wrapper {
-    width: 100%;
-    margin-bottom: 22px;
+.title {
+  align-self: flex-start;
+  margin-bottom: 32px !important;
+  text-align: left;
+  width: 100%;
 }
 
-.title{
-    margin-bottom: 10px !important;
+.formItem {
+  width: 100%;
+     margin-bottom: 0 !important;
 }
 
-.subtitle{
-    font-size: 18px;
+.formItem :global(.ant-form-item-row) {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
-.button{
-    width: 100%;
+
+.fadeItem {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  width: 100%;
+}
+
+.item1 { animation-delay: 0.3s; }
+.item2 { animation-delay: 0.6s; }
+.item3 { animation-delay: 0.9s; }
+.item4 { animation-delay: 1.2s; }
+.item5 { animation-delay: 1.5s; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.uploader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+@media (max-width: 480px) {
+  
+  .uploader :global(.ant-upload) {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+  }
 }
