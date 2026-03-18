@@ -18,7 +18,8 @@ import {
 } from '@ant-design/icons';
 import classNames from 'classnames';
 
-import styles from './mainInfo.module.css';
+import styles from './main-info.module.css';
+import baseStyles from '../../onboarding-steps.module.css';
 
 const {Title, Text} = Typography;
 const {Option} = Select;
@@ -63,11 +64,11 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
 
   return (
     <Fragment>
-      <Title level={2} className={styles.title}>
+      <Title level={2} className={baseStyles.title}>
         {t('auth.main_info.title')}
       </Title>
 
-      <div className={classNames(styles.fadeItem, styles.item1)}>
+      <div className={classNames(baseStyles.fadeItem, baseStyles.delay1)}>
         <Form.Item
           name='name'
           label={<Text strong>{t('auth.main_info.name_label')}</Text>}
@@ -87,7 +88,7 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
         </Form.Item>
       </div>
 
-      <div className={classNames(styles.fadeItem, styles.item2)}>
+      <div className={classNames(baseStyles.fadeItem, baseStyles.delay2)}>
         <Form.Item
           name='age'
           label={
@@ -119,7 +120,7 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
         </Form.Item>
       </div>
 
-      <div className={classNames(styles.fadeItem, styles.item3)}>
+      <div className={classNames(baseStyles.fadeItem, baseStyles.delay3)}>
         <Form.Item
           name='gender'
           label={<Text strong>{t('auth.main_info.gender_label')}</Text>}
@@ -140,7 +141,7 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
         </Form.Item>
       </div>
 
-      <div className={classNames(styles.fadeItem, styles.item4)}>
+      <div className={classNames(baseStyles.fadeItem, baseStyles.delay4)}>
         <Form.Item
           name='photo'
           label={<Text strong>{t('auth.main_info.photo_label')}</Text>}
@@ -182,7 +183,7 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
         block
         color='primary'
         variant='filled'
-        className={classNames(styles.fadeItem, styles.item5)}
+        className={classNames(baseStyles.fadeItem, baseStyles.delay5)}
         onClick={handleSubmit}
         loading={loading}
       >

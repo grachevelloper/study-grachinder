@@ -7,31 +7,35 @@ import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
 import styles from './onboarding-steps.module.css';
 import {MainInfo} from './components/MainInfo';
 import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
+import {BaptismInfo} from './components/BaptismInfo';
+import {InterestsInfo} from './components/InterestsInfo';
+import {AboutInfo} from './components/AboutInfo';
+import {ContactsInfo} from './components/ContactsInfo';
+import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
 
 export const OnboadringSteps = () => {
   const [form] = Form.useForm<any>();
-  const [stepCount, setStepCount] = useLocalStorage<number>(
+  const [stepCount, setStep] = useLocalStorage<number>(
     ONBOARDING_STEP_COUNT_KEY,
     0
   );
 
   const handleNextStep = () => {
-    setStepCount((prev) => prev + 1);
+    setStep((prev) => prev + 1);
     AuthEmitter.emit(AUTH_EVENT, stepCount + 1);
   };
 
-  useEffect(() => {
-    const handleSignStepChange = (newStep: number) => {
-      if (newStep !== stepCount) {
-        setStepCount(newStep);
-      }
-    };
-    AuthEmitter.on(AUTH_EVENT, handleSignStepChange);
+  const handlePrevStep = () => {
+    setStep((prev) => prev - 1);
+    AuthEmitter.emit(AUTH_EVENT, stepCount - 1);
+  };
+  const handleStepChange = (newStep: number) => {
+    if (newStep !== stepCount) {
+      setStep(newStep);
+    }
+  };
 
-    return () => {
-      AuthEmitter.off(AUTH_EVENT, handleSignStepChange);
-    };
-  }, [setStepCount, AuthEmitter]);
+  useAuthStepsListen({onStepChange: handleStepChange, stepCount});
 
   const renderFormField = useCallback(() => {
     switch (stepCount) {
@@ -40,6 +44,42 @@ export const OnboadringSteps = () => {
       }
       case 1: {
         return <MainInfo onSumbit={handleNextStep} loading={false} />;
+      }
+      case 2: {
+        return (
+          <BaptismInfo
+            onBack={handlePrevStep}
+            onSumbit={handleNextStep}
+            loading={false}
+          />
+        );
+      }
+      case 3: {
+        return (
+          <InterestsInfo
+            onBack={handlePrevStep}
+            onSumbit={handleNextStep}
+            loading={false}
+          />
+        );
+      }
+      case 4: {
+        return (
+          <AboutInfo
+            onBack={handlePrevStep}
+            onSumbit={handleNextStep}
+            loading={false}
+          />
+        );
+      }
+      case 5: {
+        return (
+          <ContactsInfo
+            onBack={handlePrevStep}
+            onSumbit={handleNextStep}
+            loading={false}
+          />
+        );
       }
     }
   }, [stepCount, handleNextStep]);

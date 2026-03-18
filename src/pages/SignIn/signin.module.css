@@ -1,20 +1,44 @@
-.wrapper{
-    width: 100%;
-}
-
-.text_wrapper {
-    width: 100%;
-    margin-bottom: 22px;
+.wrapper {
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 20px;
 }
 
 .title{
     margin-bottom: 10px !important;
 }
 
-.text{
-    font-size: 18px;
+.text_wrapper {
+  width: 100%;
+  margin-bottom: 10px;
 }
 
-.button{
-    width: 100%;
+.button {
+  width: 100%;
+}
+
+@media (max-width: 320px) {
+  .wrapper {
+    padding: 12px !important;
+    border-radius: 16px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .wrapper {
+    width: 80vw;
+  }
+}
+
+@media (min-width: 1440px) {
+  .wrapper {
+    max-width: 1200px;
+  }
+}
+
+@media (min-width: 2560px) {
+  .wrapper {
+    width: 60vw;
+    max-width: 1400px;
+  }
 }

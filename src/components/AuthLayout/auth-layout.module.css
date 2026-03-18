@@ -3,7 +3,7 @@
     width: 100vw;
     position: relative;
     overflow: hidden;
-
+    flex-wrap: nowrap; 
     background-color: white;
 }
 .children_wrapper{

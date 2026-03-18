@@ -10,6 +10,9 @@ import {NOTIFICATION_AUTH_SHOWED} from './constants';
 import {Preview} from './components/Preview';
 
 import styles from './onboadring.module.css';
+import {useLocalStorage} from '~shared/hooks/useLocalStorage';
+import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
+import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
 
 const {Title, Text} = Typography;
 
@@ -20,6 +23,17 @@ export default () => {
   const navigate = useNavigate();
   const location = useLocation();
   const {token} = theme.useToken();
+  const [stepCount, setStep] = useLocalStorage<number>(
+    ONBOARDING_STEP_COUNT_KEY
+  );
+
+  const handleStepChange = (newStep: number) => {
+    if (newStep !== stepCount) {
+      setStep(newStep);
+    }
+  };
+
+  useAuthStepsListen({onStepChange: handleStepChange, stepCount});
 
   const [isNotificationShowed, setNotificationShowed] = useSessionStorage(
     NOTIFICATION_AUTH_SHOWED,
@@ -88,13 +102,13 @@ export default () => {
 
   return (
     <Flex
-      className={styles.onboadrind}
-      justify='space-between'
+      className={styles.onboarding}
+      justify='space-around'
       align='flex-start'
     >
       {contextHolder}
       <OnboadringSteps />
-      <Preview name='' gender='male' />
+      {stepCount !== 0 && <Preview name='' gender='male' />}
       {renderFloatButtonToSignIn}
     </Flex>
   );

@@ -1,8 +1,92 @@
 .form_wrapper{
     max-width: 600px;
+    width: 100%;
 }
 
 .form{
     width: 100%;
     position: relative;
+}
+
+.title {
+    align-self: flex-start;
+    margin-bottom: 32px !important;
+    text-align: left;
+    width: 100%;
+    animation: fadeInTop 0.5s ease forwards;
+}
+
+.subtitle {
+  align-self: flex-start;
+  margin-bottom: 24px;
+  color: rgba(0, 0, 0, 0.45);
+  width: 100%;
+  text-align: left;
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.formItem {
+  width: 100%;
+  margin-bottom: 0 !important;
+}
+
+.formItem :global(.ant-form-item-row) {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.fadeItem {
+  opacity: 0;
+  animation: fadeIn 0.5s ease forwards;
+  width: 100%;
+}
+
+.delay1 { animation-delay: 0.3s; }
+.delay2 { animation-delay: 0.6s; }
+.delay3 { animation-delay: 0.9s; }
+.delay4 { animation-delay: 1.2s; }
+.delay5 { animation-delay: 1.5s; }
+.delay6 { animation-delay: 1.8s; }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeInTop {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.buttonContainer {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* Медиа-запросы */
+@media (max-width: 480px) {
+  .title {
+    font-size: 24px !important;
+    margin-bottom: 24px !important;
+  }
+  
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
 }

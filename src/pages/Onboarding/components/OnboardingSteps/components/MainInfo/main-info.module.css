@@ -1,0 +1,15 @@
+.uploader {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+
+@media (max-width: 480px) {
+  
+  .uploader :global(.ant-upload) {
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+  }
+}

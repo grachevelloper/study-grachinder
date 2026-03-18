@@ -1,31 +1,28 @@
 import {Col, Flex, Image, Row} from 'antd';
-import {Fragment, useEffect} from 'react';
+import {Fragment} from 'react';
 import layoutImg from '~assets/layout.png';
-
-import styles from './auth-layout.module.css';
 import {Outlet, useLocation} from 'react-router-dom';
 import {useLocalStorage} from '~shared/hooks/useLocalStorage';
 import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
-import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
+
+import styles from './auth-layout.module.css';
+import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
 
 export const AuthLayout = () => {
   const location = useLocation();
-  const [step, setStep] = useLocalStorage<number>(ONBOARDING_STEP_COUNT_KEY);
+  const [stepCount, setStep] = useLocalStorage<number>(
+    ONBOARDING_STEP_COUNT_KEY
+  );
 
-  const isUserMeta = location.pathname === '/auth/signup' && step >= 1;
-  console.log(isUserMeta, step);
-  useEffect(() => {
-    const handleSignStepChange = (newStep: number) => {
-      if (newStep !== step) {
-        setStep(newStep);
-      }
-    };
+  const isUserMeta = location.pathname === '/auth/signup' && stepCount >= 1;
 
-    AuthEmitter.on(AUTH_EVENT, handleSignStepChange);
-    return () => {
-      AuthEmitter.off(AUTH_EVENT, handleSignStepChange);
-    };
-  }, [setStep, AuthEmitter]);
+  const handleStepChange = (newStep: number) => {
+    if (newStep !== stepCount) {
+      setStep(newStep);
+    }
+  };
+
+  useAuthStepsListen({onStepChange: handleStepChange, stepCount});
 
   return (
     <Fragment>
@@ -48,7 +45,7 @@ export const AuthLayout = () => {
             align={isUserMeta ? 'top' : 'middle'}
             className={styles.children}
             style={{
-              margin: isUserMeta ? '50px 0 0 40px' : '15% auto 0 ',
+              margin: isUserMeta ? '50px 0 0 40px' : '15% auto 0',
             }}
           >
             <Outlet />

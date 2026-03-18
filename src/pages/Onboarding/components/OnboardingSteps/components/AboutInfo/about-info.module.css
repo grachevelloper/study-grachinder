@@ -1,0 +1,13 @@
+.textarea {
+  width: 100%;
+  resize: none;
+}
+
+.textarea :global(.ant-input) {
+  font-size: 16px;
+}
+
+.textarea :global(.ant-input-textarea-show-count)::after {
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 14px;
+}
