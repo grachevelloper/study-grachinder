@@ -6,6 +6,7 @@ import classNames from 'classnames';
 
 import styles from './contacts-info.module.css';
 import baseStyles from '../../onboarding-steps.module.css';
+import type {UserFormData} from '~shared/typings/user';
 
 const {Title, Text} = Typography;
 
@@ -15,11 +16,10 @@ interface ContactsInfoProps {
   loading: boolean;
 }
 
-interface ContactsInfoFormData {
-  telegram?: string;
-  phone?: string;
-  email?: string;
-}
+interface ContactsInfoFormData extends Pick<
+  UserFormData,
+  'telegram' | 'email' | 'phone'
+> {}
 
 export const ContactsInfo = ({
   onSumbit,

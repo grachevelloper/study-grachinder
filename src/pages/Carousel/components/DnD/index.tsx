@@ -5,9 +5,11 @@ import styles from './dnd.module.css';
 import {DragDropProvider} from '@dnd-kit/react';
 import {useState} from 'react';
 
-interface DndProps {}
+interface DndProps {
+  onClick: VoidFunction;
+}
 
-export const Dnd = ({}: DndProps) => {
+export const Dnd = ({onClick}: DndProps) => {
   const [parent, setParent] = useState(undefined);
   return (
     <DragDropProvider
@@ -16,7 +18,7 @@ export const Dnd = ({}: DndProps) => {
         setParent(event.operation.target?.id as undefined);
       }}
     >
-      <Flex vertical className={styles.root}>
+      <Flex vertical className={styles.root} onClick={onClick}>
         <Droppable id='like-droppable'>
           {parent === 'like-droppable' ? <Draggable /> : null}
         </Droppable>

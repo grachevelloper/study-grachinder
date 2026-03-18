@@ -1,0 +1,1 @@
+export const BOTTOM_SHEET_TRESHOLD_PX = 30;

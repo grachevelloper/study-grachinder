@@ -5,6 +5,7 @@ import classNames from 'classnames';
 
 import styles from './about-info.module.css';
 import baseStyles from '../../onboarding-steps.module.css';
+import type {UserFormData} from '~shared/typings/user';
 
 const {Title, Text} = Typography;
 const {TextArea} = Input;
@@ -15,9 +16,7 @@ interface AboutInfoProps {
   loading: boolean;
 }
 
-interface AboutInfoFormData {
-  about?: string;
-}
+type AboutInfoFormData = Pick<UserFormData, 'bio'>;
 
 export const AboutInfo = ({onSumbit, onBack, loading}: AboutInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);

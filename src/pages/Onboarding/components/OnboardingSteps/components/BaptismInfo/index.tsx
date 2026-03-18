@@ -12,6 +12,7 @@ import dayjs from 'dayjs';
 
 import styles from './baptism-info.module.css';
 import baseStyles from '../../onboarding-steps.module.css';
+import type {UserFormData} from '~shared/typings/user';
 
 const {Title, Text} = Typography;
 const {Option} = Select;
@@ -22,12 +23,7 @@ interface BaptismInfoProps {
   loading: boolean;
 }
 
-interface BaptismInfoFormData {
-  baptismDate?: dayjs.Dayjs;
-  childrenCount?: string;
-  maritalStatus?: 'single' | 'married' | 'divorced' | 'widowed';
-  city?: string;
-}
+type BaptismInfoFormData = Pick<UserFormData, 'baptism_date'> & {};
 
 export const BaptismInfo = ({onSumbit, onBack, loading}: BaptismInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
