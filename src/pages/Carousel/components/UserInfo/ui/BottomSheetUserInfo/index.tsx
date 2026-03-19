@@ -14,26 +14,6 @@ import {useEffect, useState} from 'react';
 const {Title, Text} = Typography;
 
 // Мок-данные для примера
-export const MOCK_USER = {
-  name: 'Добрыня Никитич',
-  age: 33,
-  city: 'Муром',
-  about:
-    'Богатырь земли русской. Ищу спутницу жизни, с которой можно и в поход, и за стол праздничный. Люблю коней, баню и былины сказывать.',
-  interests: ['interests.faith', 'interests.nature', 'interests.history'],
-  baptismDate: '2020-01-19',
-  childrenCount: 0,
-  maritalStatus: 'single',
-  gender: 'male',
-  contacts: {
-    telegram: '@dobrynya',
-    phone: '+7 (999) 123-45-67',
-    email: 'dobrynya@mail.ru',
-  },
-};
-
-const TRESHOLD = 30;
-
 interface BottomSheetInfoProps {
   user: typeof MOCK_USER;
   onClose?: () => void;
@@ -42,8 +22,6 @@ interface BottomSheetInfoProps {
 
 export default ({open, onClose, user}: BottomSheetInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
-
-  user = MOCK_USER;
   return (
     <Drawer
       title={null}
