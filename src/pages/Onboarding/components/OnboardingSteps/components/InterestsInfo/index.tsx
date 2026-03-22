@@ -1,10 +1,11 @@
 import {Typography, Button, Form, Flex, Tag} from 'antd';
+import classNames from 'classnames';
 import {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import classNames from 'classnames';
+
+import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './interests-info.module.css';
-import baseStyles from '../../onboarding-steps.module.css';
 
 const {Title, Text} = Typography;
 
@@ -97,6 +98,7 @@ export const InterestsInfo = ({
             })}
             onClick={() => handleInterestClick(interest)}
           >
+            {/* @ts-expect-error - динамический ключ i18n */}
             {t(`auth.interests.${interest}`)}
           </Tag>
         ))}

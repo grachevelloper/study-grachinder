@@ -16,8 +16,7 @@ export interface User {
     interests: string[]
 }
 
-export interface UserFormData extends Omit<User, 'id'> {
-}
+export type UserFormData = Omit<User, 'id'>
 
 
 export interface UserResponse extends User {

@@ -1,10 +1,10 @@
-import {Typography, Flex, Tag, Divider} from 'antd';
 import {
   UserOutlined,
   CalendarOutlined,
   EnvironmentOutlined,
   HeartOutlined,
 } from '@ant-design/icons';
+import {Typography, Flex, Tag, Divider} from 'antd';
 import {useTranslation} from 'react-i18next';
 
 import styles from './sider-user-info.module.css';
@@ -28,7 +28,7 @@ interface UserCardProps {
   user: typeof MOCK_USER;
 }
 
-export default ({user}: UserCardProps) => {
+const SiderUserInfo = ({user}: UserCardProps) => {
   const {t} = useTranslation(['auth', 'common']);
 
   return (
@@ -54,6 +54,7 @@ export default ({user}: UserCardProps) => {
           <CalendarOutlined /> {t('auth.preview.age_format', {age: user.age})}
         </Text>
         <Text className={styles.infoItem}>
+          {/* @ts-expect-error - динамический ключ i18n */}
           <UserOutlined /> {t(`auth.main_info.gender_${user.gender}`)}
         </Text>
         {user.childrenCount !== undefined && (
@@ -82,6 +83,7 @@ export default ({user}: UserCardProps) => {
         <Flex wrap='wrap' gap={8} className={styles.interests}>
           {user.interests?.map((interest) => (
             <Tag key={interest} className={styles.interestTag}>
+              {/* @ts-expect-error - динамический ключ i18n */}
               {t(`auth.interests.${interest}`)}
             </Tag>
           ))}
@@ -90,3 +92,4 @@ export default ({user}: UserCardProps) => {
     </Flex>
   );
 };
+export default SiderUserInfo;

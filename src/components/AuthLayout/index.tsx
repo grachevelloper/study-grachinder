@@ -1,12 +1,14 @@
 import {Col, Flex, Image, Row, theme} from 'antd';
 import {Fragment} from 'react';
-import layoutImg from '~assets/layout.png';
 import {Outlet, useLocation} from 'react-router-dom';
-import {useLocalStorage} from '~shared/hooks/useLocalStorage';
-import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
+
 
 import styles from './auth-layout.module.css';
+
+import layoutImg from '~assets/layout.png';
+import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
 import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
+import {useLocalStorage} from '~shared/hooks/useLocalStorage';
 
 export const AuthLayout = () => {
   const location = useLocation();

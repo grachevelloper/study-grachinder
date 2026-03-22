@@ -1,6 +1,6 @@
 import ruAuth from '~locales/ru/auth.json';
-import ruCommon from '~locales/ru/common.json';
 import ruCarousel from '~locales/ru/carousel.json';
+import ruCommon from '~locales/ru/common.json';
 
 declare module 'i18next' {
     interface CustomTypeOptions {

@@ -1,11 +1,11 @@
 import {Typography, Button, Form, Flex, Input} from 'antd';
+import classNames from 'classnames';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
-import classNames from 'classnames';
+
+import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './about-info.module.css';
-import baseStyles from '../../onboarding-steps.module.css';
-import type {UserFormData} from '~shared/typings/user';
 
 const {Title, Text} = Typography;
 const {TextArea} = Input;
@@ -16,7 +16,7 @@ interface AboutInfoProps {
   loading: boolean;
 }
 
-type AboutInfoFormData = Pick<UserFormData, 'bio'>;
+// type AboutInfoFormData = Pick<UserFormData, 'bio'>;
 
 export const AboutInfo = ({onSumbit, onBack, loading}: AboutInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);

@@ -1,15 +1,17 @@
-import {Typography, Input, Button, Select, Upload, Form, Image} from 'antd';
-import {Fragment} from 'react';
-import {useTranslation} from 'react-i18next';
 import {
   UserOutlined,
   CalendarOutlined,
   CameraOutlined,
 } from '@ant-design/icons';
+import {Typography, Input, Button, Select, Upload, Form, Image} from 'antd';
 import classNames from 'classnames';
+import {Fragment, useEffect} from 'react';
+import {useTranslation} from 'react-i18next';
+
+import {useUserStorage} from '../../../../hooks/useUserStorage';
+import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './main-info.module.css';
-import baseStyles from '../../onboarding-steps.module.css';
 
 const {Title, Text} = Typography;
 const {Option} = Select;
@@ -21,25 +23,39 @@ interface MainInfoProps {
 
 interface MainInfoFormData {
   name: string;
-  age?: string;
+  photos?: string[];
+
   gender: 'male' | 'female' | 'other';
-  photo: {
-    file: File;
-    fileList: File[];
-  };
+  avatar_urls: string[];
 }
 
 export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
-  const form = Form.useFormInstance<MainInfoFormData>();
+  const {user, updateUser} = useUserStorage();
+  const [form] = Form.useForm<MainInfoFormData>();
+
+  useEffect(() => {
+    form.setFieldsValue({
+      name: user.name || '',
+      birth_date: user.birth_date || '',
+      gender: user.gender || '',
+      avatar_urls: user.avatar_urls || [],
+    });
+  }, [form, user]);
+
+  const handleFieldChange = (_changedValues: any, allValues: any) => {
+    updateUser(allValues);
+  };
 
   const handlePhotoUpload = (file: File) => {
+    const photoData = {
+      file,
+      fileList: [file],
+    };
     form.setFieldsValue({
-      photo: {
-        file,
-        fileList: [file],
-      },
+      photos: file,
     });
+    updateUser({photos: photoData});
     return false;
   };
 
@@ -60,115 +76,115 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
         {t('auth.main_info.title')}
       </Title>
 
-      <div className={classNames(baseStyles.fadeItem, baseStyles.delay1)}>
-        <Form.Item
-          name='name'
-          label={<Text strong>{t('auth.main_info.name_label')}</Text>}
-          rules={[
-            {required: true, message: t('auth.main_info.name_required')},
-            {min: 2, message: t('auth.main_info.name_min_length')},
-            {max: 50, message: t('auth.main_info.name_max_length')},
-          ]}
-          className={styles.formItem}
-          layout='vertical'
-        >
-          <Input
-            size='large'
-            placeholder={t('auth.main_info.name_placeholder')}
-            prefix={<UserOutlined />}
-          />
-        </Form.Item>
-      </div>
-
-      <div className={classNames(baseStyles.fadeItem, baseStyles.delay2)}>
-        <Form.Item
-          name='age'
-          label={
-            <Text strong>
-              {t('auth.main_info.age_label')}
-              <Text type='secondary'> ({t('common:optional')})</Text>
-            </Text>
-          }
-          rules={[
-            {pattern: /^\d+$/, message: t('auth.main_info.age_invalid')},
-            {
-              type: 'number',
-              transform: Number,
-              min: 18,
-              max: 100,
-              message: t('auth.main_info.age_range'),
-            },
-          ]}
-          className={styles.formItem}
-          getValueFromEvent={(e) => e.target.value}
-          layout='vertical'
-        >
-          <Input
-            size='large'
-            type='number'
-            placeholder={t('auth.main_info.age_placeholder')}
-            prefix={<CalendarOutlined />}
-          />
-        </Form.Item>
-      </div>
-
-      <div className={classNames(baseStyles.fadeItem, baseStyles.delay3)}>
-        <Form.Item
-          name='gender'
-          label={<Text strong>{t('auth.main_info.gender_label')}</Text>}
-          rules={[
-            {required: true, message: t('auth.main_info.gender_required')},
-          ]}
-          className={styles.formItem}
-          layout='vertical'
-        >
-          <Select
-            size='large'
-            placeholder={t('auth.main_info.gender_placeholder')}
+      <Form form={form} onValuesChange={handleFieldChange} layout='vertical'>
+        <div className={classNames(baseStyles.fadeItem, baseStyles.delay1)}>
+          <Form.Item
+            name='name'
+            label={<Text strong>{t('auth.main_info.name_label')}</Text>}
+            rules={[
+              {required: true, message: t('auth.main_info.name_required')},
+              {min: 2, message: t('auth.main_info.name_min_length')},
+              {max: 50, message: t('auth.main_info.name_max_length')},
+            ]}
+            className={styles.formItem}
           >
-            <Option value='male'>{t('auth.main_info.gender_male')}</Option>
-            <Option value='female'>{t('auth.main_info.gender_female')}</Option>
-            <Option value='other'>{t('auth.main_info.gender_other')}</Option>
-          </Select>
-        </Form.Item>
-      </div>
+            <Input
+              size='large'
+              placeholder={t('auth.main_info.name_placeholder')}
+              prefix={<UserOutlined />}
+            />
+          </Form.Item>
+        </div>
 
-      <div className={classNames(baseStyles.fadeItem, baseStyles.delay4)}>
-        <Form.Item
-          name='photo'
-          label={<Text strong>{t('auth.main_info.photo_label')}</Text>}
-          rules={[
-            {required: true, message: t('auth.main_info.photo_required')},
-          ]}
-          className={styles.formItem}
-          getValueFromEvent={(e) => e?.file}
-          layout='vertical'
-        >
-          <Upload
-            listType='picture-card'
-            showUploadList={true}
-            beforeUpload={handlePhotoUpload}
-            className={styles.uploader}
-            accept='image/*'
-            multiple
+        <div className={classNames(baseStyles.fadeItem, baseStyles.delay2)}>
+          <Form.Item
+            name='age'
+            label={
+              <Text strong>
+                {t('auth.main_info.age_label')}
+                <Text type='secondary'> ({t('common:optional')})</Text>
+              </Text>
+            }
+            rules={[
+              {pattern: /^\d+$/, message: t('auth.main_info.age_invalid')},
+              {
+                type: 'number',
+                transform: Number,
+                min: 18,
+                max: 100,
+                message: t('auth.main_info.age_range'),
+              },
+            ]}
+            className={styles.formItem}
+            getValueFromEvent={(e) => e.target.value}
           >
-            {form.getFieldValue('photo')?.file ? (
-              <Image
-                src={URL.createObjectURL(form.getFieldValue('photo').file)}
-                alt='avatar'
-                width='100%'
-                height='100%'
-                style={{objectFit: 'cover'}}
-              />
-            ) : (
-              <div>
-                <CameraOutlined />
-                <div style={{marginTop: 8}}>{t('auth.main_info.upload')}</div>
-              </div>
-            )}
-          </Upload>
-        </Form.Item>
-      </div>
+            <Input
+              size='large'
+              type='number'
+              placeholder={t('auth.main_info.age_placeholder')}
+              prefix={<CalendarOutlined />}
+            />
+          </Form.Item>
+        </div>
+
+        <div className={classNames(baseStyles.fadeItem, baseStyles.delay3)}>
+          <Form.Item
+            name='gender'
+            label={<Text strong>{t('auth.main_info.gender_label')}</Text>}
+            rules={[
+              {required: true, message: t('auth.main_info.gender_required')},
+            ]}
+            className={styles.formItem}
+          >
+            <Select
+              size='large'
+              placeholder={t('auth.main_info.gender_placeholder')}
+            >
+              <Option value='male'>{t('auth.main_info.gender_male')}</Option>
+              <Option value='female'>
+                {t('auth.main_info.gender_female')}
+              </Option>
+              <Option value='other'>{t('auth.main_info.gender_other')}</Option>
+            </Select>
+          </Form.Item>
+        </div>
+
+        <div className={classNames(baseStyles.fadeItem, baseStyles.delay4)}>
+          <Form.Item
+            name='photo'
+            label={<Text strong>{t('auth.main_info.photo_label')}</Text>}
+            rules={[
+              {required: true, message: t('auth.main_info.photo_required')},
+            ]}
+            className={styles.formItem}
+            getValueFromEvent={(e) => e?.file}
+          >
+            <Upload
+              listType='picture-card'
+              showUploadList={true}
+              beforeUpload={handlePhotoUpload}
+              className={styles.uploader}
+              accept='image/*'
+              multiple
+            >
+              {photoValue?.file ? (
+                <Image
+                  src={URL.createObjectURL(photoValue.file)}
+                  alt='avatar'
+                  width='100%'
+                  height='100%'
+                  style={{objectFit: 'cover'}}
+                />
+              ) : (
+                <div>
+                  <CameraOutlined />
+                  <div style={{marginTop: 8}}>{t('auth.main_info.upload')}</div>
+                </div>
+              )}
+            </Upload>
+          </Form.Item>
+        </div>
+      </Form>
 
       <Button
         type='primary'

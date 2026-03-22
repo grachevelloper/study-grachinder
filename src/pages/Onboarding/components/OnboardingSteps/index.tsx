@@ -1,17 +1,19 @@
 import {Flex, Form} from 'antd';
-import {useCallback, useEffect} from 'react';
-import {useLocalStorage} from '~shared/hooks/useLocalStorage';
+import {useCallback} from 'react';
+
+import {AboutInfo} from './components/AboutInfo';
+import {BaptismInfo} from './components/BaptismInfo';
+import {ContactsInfo} from './components/ContactsInfo';
+import {InterestsInfo} from './components/InterestsInfo';
+import {MainInfo} from './components/MainInfo';
 import {Register} from './components/Register';
-import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
 
 import styles from './onboarding-steps.module.css';
-import {MainInfo} from './components/MainInfo';
+
+import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
 import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
-import {BaptismInfo} from './components/BaptismInfo';
-import {InterestsInfo} from './components/InterestsInfo';
-import {AboutInfo} from './components/AboutInfo';
-import {ContactsInfo} from './components/ContactsInfo';
 import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
+import {useLocalStorage} from '~shared/hooks/useLocalStorage';
 
 export const OnboadringSteps = () => {
   const [form] = Form.useForm<any>();

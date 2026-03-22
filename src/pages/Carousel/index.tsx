@@ -1,10 +1,12 @@
 import {Flex, Carousel as AntCarousel} from 'antd';
-import styles from './carousel.module.css';
 import {useEffect, useRef, useState} from 'react';
-import UserInfo from './components/UserInfo';
-import {useScrollDirection} from './hooks/use-scroll-direction';
-import {BOTTOM_SHEET_TRESHOLD_PX} from './constants';
+
 import {Swipe} from './components/Swipe';
+import UserInfo from './components/UserInfo';
+import {BOTTOM_SHEET_TRESHOLD_PX} from './constants';
+import {useScrollDirection} from './hooks/use-scroll-direction';
+
+import styles from './carousel.module.css';
 
 const MOCK_USERS = [
   {
@@ -52,7 +54,11 @@ export default () => {
     <Flex className={styles.carousel} justify='center'>
       <AntCarousel dots={false} draggable vertical>
         {MOCK_USERS.map((user) => (
-          <Swipe onClick={handleCardClick} user={user} />
+          <Swipe
+            onClick={handleCardClick}
+            user={user}
+            key={user.avatar_urls[0]}
+          />
         ))}
       </AntCarousel>
       <UserInfo

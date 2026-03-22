@@ -1,4 +1,5 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
+
 import {AuthLayout} from '~components/AuthLayout';
 import Carousel from '~pages/Carousel';
 import Onboarding from '~pages/Onboarding';

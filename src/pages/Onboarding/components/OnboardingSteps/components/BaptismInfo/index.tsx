@@ -1,17 +1,18 @@
-import {Typography, Input, Button, Select, Form, DatePicker, Flex} from 'antd';
-import {Fragment} from 'react';
-import {useTranslation} from 'react-i18next';
 import {
   CalendarOutlined,
   EnvironmentOutlined,
   TeamOutlined,
-  HeartOutlined,
 } from '@ant-design/icons';
+import {Typography, Input, Button, Select, Form, DatePicker, Flex} from 'antd';
 import classNames from 'classnames';
 import dayjs from 'dayjs';
+import {Fragment} from 'react';
+import {useTranslation} from 'react-i18next';
+
+import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './baptism-info.module.css';
-import baseStyles from '../../onboarding-steps.module.css';
+
 import type {UserFormData} from '~shared/typings/user';
 
 const {Title, Text} = Typography;

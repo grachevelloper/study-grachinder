@@ -3,93 +3,69 @@ import i18nextPlugin from 'eslint-plugin-i18next';
 import importPlugin from 'eslint-plugin-import';
 import prettierPlugin from 'eslint-plugin-prettier';
 import reactPlugin from 'eslint-plugin-react';
-import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import {defineConfig} from 'eslint/config';
+import reactHooksPlugin from 'eslint-plugin-react-hooks';
+import reactRefreshPlugin from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
-const reactHooks = require('eslint-plugin-react-hooks');
-
-const i18next = i18nextPlugin as any;
-
-export default defineConfig([
+export default tseslint.config(
+        {
+        ignores: [
+            '**/eslint.config.js',
+            '**/vite.config.ts',
+            '**/*.config.js',
+            '**/*.config.ts',
+        ],
+    },
     {
         files: ['**/*.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
         plugins: {
             js,
-            'simple-import-sort': simpleImportSort,
             import: importPlugin,
             prettier: prettierPlugin,
-            'react-hooks': reactHooks,
+            'react-hooks': reactHooksPlugin,
             react: reactPlugin,
-            i18next,
+            'react-refresh': reactRefreshPlugin,
+            i18next: i18nextPlugin,
+            '@typescript-eslint': tseslint.plugin,
         },
-        extends: [js.configs.recommended],
         settings: {
             react: {
                 version: 'detect',
             },
-            'import/resolver': {
-                alias: {
-                    map: [
-                        ['~components/**', './src/components/**'],
-                         ['~pages/**', './src/pages/**'],
-                        ['~shared/**', './src/shared/**'],
-                        ['~locales/**', './src/locales/**'],
-                         ['~assets/**', './src/assets/**'],
-                    ],
-                    extensions: [
-                        '.ts',
-                        '.tsx',
-                        '.js',
-                        '.jsx',
-                        'json',
-                        'png',
-                        'mp4',
-                        'jpg',
-                    ],
-                },
-            },
         },
         languageOptions: {
-            globals: {...globals.browser, ...globals.node, ...globals.jest},
+            globals: {
+                ...globals.browser,
+                ...globals.node,
+                ...globals.jest,
+            },
+            parser: tseslint.parser,
             parserOptions: {
                 ecmaVersion: 'latest',
                 sourceType: 'module',
                 ecmaFeatures: {
                     jsx: true,
                 },
-            },
-        },
-    },
-    tseslint.configs.recommendedTypeChecked,
-    {
-        languageOptions: {
-            parserOptions: {
                 projectService: true,
             },
         },
-    },
-    reactPlugin.configs.flat.recommended,
-    {
         rules: {
             '@typescript-eslint/no-unsafe-call': 'off',
-            'no-case-declarations': 'off',
-            '@typescript-eslint/only-throw-error': 'off',
-            '@typescript-eslint/no-unused-vars': 'warn',
-            'react/display-name': 'off',
-            'react/jsx-key': 'off',
             '@typescript-eslint/no-unsafe-assignment': 'off',
             '@typescript-eslint/no-unsafe-member-access': 'off',
-            '@typescript-eslint/explicit-function-return-type': 'off',
-            '@typescript-eslint/no-explicit-any': 'off',
-            '@typescript-eslint/no-floating-promises': 'off',
             '@typescript-eslint/no-unsafe-argument': 'off',
             '@typescript-eslint/no-unsafe-return': 'off',
+            '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-floating-promises': 'off',
+            '@typescript-eslint/only-throw-error': 'off',
+            '@typescript-eslint/no-unused-vars': 'warn',
+            '@typescript-eslint/explicit-function-return-type': 'off',
+            
+            'no-case-declarations': 'off',
             'prefer-const': 'error',
             'no-console': 'warn',
-            'simple-import-sort/imports': 'off',
-            'simple-import-sort/exports': 'off',
+            
             'import/order': [
                 'error',
                 {
@@ -101,6 +77,7 @@ export default defineConfig([
                         'sibling',
                         'index',
                         'object',
+                        'type',
                     ],
                     pathGroups: [
                         {
@@ -108,8 +85,18 @@ export default defineConfig([
                             group: 'internal',
                             position: 'before',
                         },
+                        {
+                            pattern: '~**',
+                            group: 'internal',
+                            position: 'before',
+                        },
+                        {
+                            pattern: './**/*.css',
+                            group: 'index',
+                            position: 'after',
+                        },
                     ],
-                    pathGroupsExcludedImportTypes: ['internal'],
+                    pathGroupsExcludedImportTypes: ['builtin'],
                     'newlines-between': 'always',
                     alphabetize: {
                         order: 'asc',
@@ -127,6 +114,10 @@ export default defineConfig([
             'react/jsx-uses-react': 'off',
             'react/jsx-key': 'error',
             'react/jsx-no-duplicate-props': 'error',
+            'react-refresh/only-export-components': [
+                'warn',
+                { allowConstantExport: true },
+            ],
             'object-curly-spacing': ['warn', 'never'],
         },
     },
@@ -151,9 +142,9 @@ export default defineConfig([
         },
     },
     {
-        files: ['**/__test__/mocks/**', '**/__test__/utils/**'],
+        files: ['**/__test__/**', '**/__test__/**'],
         rules: {
             '@typescript-eslint/no-var-requires': 'off',
         },
-    },
-]);
+    }
+);

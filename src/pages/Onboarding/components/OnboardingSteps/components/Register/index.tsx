@@ -1,10 +1,13 @@
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Flex, Input, Typography} from 'antd';
-import {useTranslation} from 'react-i18next';
 import {Fragment} from 'react';
-import type {StepProps} from '../../types';
+import {useTranslation} from 'react-i18next';
 
 import styles from './register.module.css';
+
+import type {StepProps} from '../../types';
+
+
 import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
 
 const {Title, Text} = Typography;

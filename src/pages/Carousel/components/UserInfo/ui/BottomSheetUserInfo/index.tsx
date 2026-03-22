@@ -1,4 +1,3 @@
-import {Drawer, Typography, Flex, Tag, Divider, Button} from 'antd';
 import Icon, {
   UserOutlined,
   CalendarOutlined,
@@ -6,6 +5,7 @@ import Icon, {
   HeartOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
+import {Drawer, Typography, Flex, Tag, Divider, Button} from 'antd';
 import {useTranslation} from 'react-i18next';
 
 import styles from './bottom-sheet-user-info.module.css';
@@ -53,6 +53,7 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
             <CalendarOutlined /> {t('auth.preview.age_format', {age: user.age})}
           </Text>
           <Text className={styles.infoItem}>
+            {/* @ts-expect-error - динамический ключ i18n */}
             <UserOutlined /> {t(`auth.main_info.gender_${user.gender}`)}
           </Text>
           {user.childrenCount !== undefined && (
@@ -87,8 +88,9 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
             {t('auth.preview.interests_label')}
           </Title>
           <Flex wrap='wrap' gap={8} className={styles.interests}>
-            {user.interests?.map((interest) => (
+            {user.interests?.map((interest: string) => (
               <Tag key={interest} className={styles.interestTag}>
+                {/* @ts-expect-error - динамический ключ i18n */}
                 {t(`auth.interests.${interest}`)}
               </Tag>
             ))}
@@ -101,7 +103,7 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
           block
           className={styles.actionButton}
         >
-          {t('common:write')}
+          {t('common:like')}
         </Button>
       </Flex>
     </Drawer>

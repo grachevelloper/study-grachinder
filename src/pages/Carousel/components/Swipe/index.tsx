@@ -1,15 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Flex,
-  Button,
   Typography,
   Image,
   Tag,
   Carousel as AntCarousel,
   theme,
 } from 'antd';
-import {LikeOutlined, DislikeOutlined} from '@ant-design/icons';
 import {useState} from 'react';
+
 import styles from './swipe.module.css';
+
 import type {User} from '~shared/typings/user';
 
 const {Title, Paragraph} = Typography;

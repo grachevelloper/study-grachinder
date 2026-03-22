@@ -1,4 +1,5 @@
 import { useEffect, useCallback } from 'react';
+
 import { AuthEmitter, AUTH_EVENT } from '../events/auth';
 
 interface UseAuthStepsListenProps {

@@ -1,11 +1,13 @@
+import {PhoneOutlined, MailOutlined, SendOutlined} from '@ant-design/icons';
 import {Typography, Button, Form, Flex, Input} from 'antd';
+import classNames from 'classnames';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
-import {PhoneOutlined, MailOutlined, SendOutlined} from '@ant-design/icons';
-import classNames from 'classnames';
+
+import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './contacts-info.module.css';
-import baseStyles from '../../onboarding-steps.module.css';
+
 import type {UserFormData} from '~shared/typings/user';
 
 const {Title, Text} = Typography;
