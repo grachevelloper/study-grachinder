@@ -90,3 +90,9 @@
     margin-bottom: 20px;
   }
 }
+
+@media (max-width: 768px){
+  .form_wrapper{
+    max-width: 90%;
+  }
+}

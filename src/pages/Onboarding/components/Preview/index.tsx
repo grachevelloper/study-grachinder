@@ -38,7 +38,6 @@ export const Preview = ({
 }: PreviewProps) => {
   const {t} = useTranslation(['auth']);
 
-  // Агрегируем все пропсы в один state
   const [previewData] = useState<PreviewProps>({
     name,
     age,

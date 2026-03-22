@@ -1,23 +1,14 @@
-.bottomSheet :global(.ant-drawer-body) {
-  padding: 0;
+.bottomSheet {
   overflow-y: auto;
-  max-height: 80vh;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  max-height: 70vh;
 }
 
-.bottomSheet :global(.ant-drawer-content) {
+.bottomSheet {
   max-width: 600px;
   margin: 0 auto;
-  left: 0 !important;
-  right: 0 !important;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   overflow: hidden;
-}
-
-.container {
-  padding: 24px 20px 32px;
 }
 
 .header {

@@ -1,5 +1,5 @@
 import {ConfigProvider} from 'antd';
-import React, {createContext, useContext} from 'react';
+import React, {createContext, useContext, useEffect} from 'react';
 
 import {
   type CustomThemeConfig,
@@ -25,12 +25,15 @@ export const ThemeProvider: React.FC<{children: React.ReactNode}> = ({
   );
 
   const theme = themes[themeMode];
-
   const value: ThemeContextType = {
     theme,
     themeMode,
     setThemeMode,
   };
+
+  useEffect(() => {
+    localStorage.setItem('theme', themeMode);
+  }, [themeMode]);
 
   return (
     <ThemeContext.Provider value={value}>

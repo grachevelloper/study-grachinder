@@ -1,21 +1,19 @@
 import {Drawer, Typography, Flex, Tag, Divider, Button} from 'antd';
-import {
+import Icon, {
   UserOutlined,
   CalendarOutlined,
   EnvironmentOutlined,
   HeartOutlined,
+  CloseOutlined,
 } from '@ant-design/icons';
 import {useTranslation} from 'react-i18next';
 
 import styles from './bottom-sheet-user-info.module.css';
-import {useScrollDirection} from '../../../../hooks/use-scroll-direction';
-import {useEffect, useState} from 'react';
 
 const {Title, Text} = Typography;
 
-// Мок-данные для примера
 interface BottomSheetInfoProps {
-  user: typeof MOCK_USER;
+  user: any;
   onClose?: () => void;
   open?: boolean;
 }
@@ -33,19 +31,21 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
       closeIcon={null}
     >
       <Flex vertical className={styles.container}>
-        <Flex justify='space-between' align='center' className={styles.header}>
+        <Flex justify='space-between' align='start' className={styles.header}>
           <div>
-            <Title level={3} className={styles.name}>
-              {user.name}, {user.age}
+            <Title level={4} className={styles.name} style={{margin: '4px 0'}}>
+              {user.name}
             </Title>
             <Text className={styles.city}>
               <EnvironmentOutlined />{' '}
               {t('auth.preview.city_format', {city: user.city})}
             </Text>
           </div>
-          <Button type='text' onClick={onClose} className={styles.closeButton}>
-            ✕
-          </Button>
+          <CloseOutlined
+            type='text'
+            onClick={onClose}
+            className={styles.closeButton}
+          />
         </Flex>
 
         <Flex wrap='wrap' gap={16} className={styles.infoRow}>
@@ -66,7 +66,11 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
         <Divider className={styles.divider} />
 
         <div className={styles.section}>
-          <Title level={5} className={styles.sectionTitle}>
+          <Title
+            level={5}
+            className={styles.sectionTitle}
+            style={{margin: '4px 0'}}
+          >
             {t('auth.preview.about_label')}
           </Title>
           <Text className={styles.about}>
@@ -75,7 +79,11 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
         </div>
 
         <div className={styles.section}>
-          <Title level={5} className={styles.sectionTitle}>
+          <Title
+            level={5}
+            className={styles.sectionTitle}
+            style={{margin: '4px 0'}}
+          >
             {t('auth.preview.interests_label')}
           </Title>
           <Flex wrap='wrap' gap={8} className={styles.interests}>

@@ -1,10 +1,9 @@
 .layout {
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     position: relative;
     overflow: hidden;
     flex-wrap: nowrap; 
-    background-color: white;
 }
 .children_wrapper{
     position: relative;
@@ -20,4 +19,29 @@
     height: 100vh;
     width: 275px;
 }
+
+@media (max-width: 1200px){
+   .image_wrapper{
+        width: 200px;
+    }
+}
+
+@media (max-width: 980px){
+   .image_wrapper{
+        width: 150px;
+    }
+}
+@media (max-width: 768px){
+   .image_wrapper{
+        display: none;
+        width: 0px;
+        height: 0px;
+    }
+
+    .children{
+        padding: 0 20px;
+    }
+}
+
+
 

@@ -6,7 +6,7 @@ export interface User {
     gender: 'male' | 'female' | 'other';
     birth_date: string;
     bio: string;
-    avatar_url: string;
+    avatar_urls: string[];
     baptism_date?: string | null;
     children_count: number;
     marriages_count: number;

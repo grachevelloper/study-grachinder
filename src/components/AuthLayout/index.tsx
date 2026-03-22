@@ -1,4 +1,4 @@
-import {Col, Flex, Image, Row} from 'antd';
+import {Col, Flex, Image, Row, theme} from 'antd';
 import {Fragment} from 'react';
 import layoutImg from '~assets/layout.png';
 import {Outlet, useLocation} from 'react-router-dom';
@@ -13,6 +13,9 @@ export const AuthLayout = () => {
   const [stepCount, setStep] = useLocalStorage<number>(
     ONBOARDING_STEP_COUNT_KEY
   );
+  const {
+    token: {colorBgBase},
+  } = theme.useToken();
 
   const isUserMeta = location.pathname === '/auth/signup' && stepCount >= 1;
 
@@ -26,7 +29,14 @@ export const AuthLayout = () => {
 
   return (
     <Fragment>
-      <Row justify='center' align='middle' className={styles.layout}>
+      <Row
+        justify='center'
+        align='middle'
+        className={styles.layout}
+        style={{
+          backgroundColor: colorBgBase,
+        }}
+      >
         <Col>
           <Flex justify='end' className={styles.image_wrapper}>
             <Image

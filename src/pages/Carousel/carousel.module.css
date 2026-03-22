@@ -1,13 +1,4 @@
 .carousel{
     height: 100vh;
-    width: 100vw;
-    overflow: auto;
     -webkit-overflow-scrolling: touch;
-    background-color: pink;
 }
-
-/* @media (min-width: 1400px) {
-    .carousel{
-
-    }
-} */

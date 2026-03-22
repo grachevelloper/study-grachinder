@@ -1,19 +1,9 @@
-import {
-  Typography,
-  Input,
-  Button,
-  Select,
-  Upload,
-  Form,
-  Flex,
-  Image,
-} from 'antd';
+import {Typography, Input, Button, Select, Upload, Form, Image} from 'antd';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   UserOutlined,
   CalendarOutlined,
-  ManOutlined,
   CameraOutlined,
 } from '@ant-design/icons';
 import classNames from 'classnames';
@@ -61,6 +51,8 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
       console.error('Validation failed:', error);
     }
   };
+
+  const photoValue = Form.useWatch('photo', form);
 
   return (
     <Fragment>
@@ -154,10 +146,11 @@ export const MainInfo = ({onSumbit, loading}: MainInfoProps) => {
         >
           <Upload
             listType='picture-card'
-            showUploadList={false}
+            showUploadList={true}
             beforeUpload={handlePhotoUpload}
             className={styles.uploader}
             accept='image/*'
+            multiple
           >
             {form.getFieldValue('photo')?.file ? (
               <Image

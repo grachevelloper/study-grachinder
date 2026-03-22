@@ -1,7 +1,7 @@
 import {useAuth} from '~shared/providers/Auth';
 import {OnboadringSteps} from './components/OnboardingSteps';
 import {Button, Flex, FloatButton, notification, theme, Typography} from 'antd';
-import {useEffect, useMemo} from 'react';
+import {useEffect, useMemo, useRef} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {LoginOutlined} from '@ant-design/icons';
@@ -13,6 +13,7 @@ import styles from './onboadring.module.css';
 import {useLocalStorage} from '~shared/hooks/useLocalStorage';
 import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
 import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
+import {useTheme} from '~shared/providers/Theme';
 
 const {Title, Text} = Typography;
 
@@ -26,6 +27,8 @@ export default () => {
   const [stepCount, setStep] = useLocalStorage<number>(
     ONBOARDING_STEP_COUNT_KEY
   );
+
+  const isMobile = window.innerWidth <= 768;
 
   const handleStepChange = (newStep: number) => {
     if (newStep !== stepCount) {
@@ -108,7 +111,7 @@ export default () => {
     >
       {contextHolder}
       <OnboadringSteps />
-      {stepCount !== 0 && <Preview name='' gender='male' />}
+      {stepCount !== 0 && !isMobile && <Preview name='' gender='male' />}
       {renderFloatButtonToSignIn}
     </Flex>
   );

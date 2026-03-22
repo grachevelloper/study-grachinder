@@ -1,0 +1,74 @@
+.container {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.swipeTop {
+  transform: translateY(150%) rotate(15deg);
+  opacity: 0;
+}
+
+.swipeBottom {
+  transform: translateY(-150%) rotate(-15deg);
+  opacity: 0;
+}
+
+.carouselWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.slider {
+  width: 100%;
+  height: 100%;
+}
+
+.slider :global(.slick-list),
+.slider :global(.slick-track),
+.slider :global(.slick-slide),
+.slider :global(.slick-slide > div) {
+  height: 100%;
+}
+
+.slide {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 90%;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
+  color: white;
+}
+
+.empty {
+  height: 100vh;
+  text-align: center;
+}
+
+@media(min-width: 768px){
+    .container{
+        aspect-ratio: 9 / 19.5;
+    }
+}
