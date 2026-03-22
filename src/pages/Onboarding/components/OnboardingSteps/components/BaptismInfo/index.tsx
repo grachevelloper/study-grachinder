@@ -70,7 +70,7 @@ export const BaptismInfo = ({onSumbit, onBack, loading}: BaptismInfoProps) => {
 
       <div className={classNames(baseStyles.fadeItem, baseStyles.delay2)}>
         <Form.Item
-          name='childrenCount'
+          name='children_count'
           label={
             <Text strong>
               {t('auth.baptism_info.children_label')}

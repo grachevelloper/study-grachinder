@@ -8,7 +8,7 @@ import styles from './signin.module.css';
 const {Title, Text, Link} = Typography;
 const {useBreakpoint} = Grid;
 
-export default () => {
+const SignInPage = () => {
   const {t} = useTranslation('auth');
   const navigate = useNavigate();
   const screens = useBreakpoint();
@@ -134,3 +134,4 @@ export default () => {
     </Flex>
   );
 };
+export default SignInPage;

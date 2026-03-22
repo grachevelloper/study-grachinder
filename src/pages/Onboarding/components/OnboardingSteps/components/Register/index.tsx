@@ -17,7 +17,7 @@ export const Register = ({loading, onSumbit}: StepProps) => {
 
   const handleSubmit = async () => {
     await onSumbit();
-    AuthEmitter.emit(AUTH_EVENT, (prev: number) => (prev = 1));
+    AuthEmitter.emit(AUTH_EVENT, 1);
   };
 
   return (

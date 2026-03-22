@@ -1,10 +1,9 @@
 export interface User {
     id: number;
     name: string;
-    surname: string;
     email: string;
     gender: 'male' | 'female' | 'other';
-    birth_date: string;
+    age: number;
     bio: string;
     avatar_urls: string[];
     baptism_date?: string | null;

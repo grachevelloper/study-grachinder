@@ -7,6 +7,8 @@ import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './interests-info.module.css';
 
+import {useUserStorage} from '~pages/Onboarding/hooks/useUserStorage';
+
 const {Title, Text} = Typography;
 
 interface InterestsInfoProps {
@@ -43,8 +45,9 @@ export const InterestsInfo = ({
 }: InterestsInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
   const form = Form.useFormInstance<InterestsInfoFormData>();
+  const {user, updateUser} = useUserStorage();
   const [selectedInterests, setSelectedInterests] = useState<string[]>(
-    form.getFieldValue('interests') || []
+    user.interests ?? []
   );
 
   const handleInterestClick = (interest: string) => {
@@ -54,6 +57,7 @@ export const InterestsInfo = ({
 
     setSelectedInterests(newSelected);
     form.setFieldsValue({interests: newSelected});
+    updateUser({interests: newSelected});
   };
 
   const handleSubmit = async () => {
@@ -94,7 +98,7 @@ export const InterestsInfo = ({
           <Tag
             key={interest}
             className={classNames(styles.interestTag, {
-              [styles.selected]: selectedInterests.includes(interest),
+              [styles.selected]: selectedInterests?.includes(interest),
             })}
             onClick={() => handleInterestClick(interest)}
           >
@@ -123,7 +127,7 @@ export const InterestsInfo = ({
           variant='filled'
           onClick={handleSubmit}
           loading={loading}
-          disabled={selectedInterests.length === 0}
+          disabled={selectedInterests?.length === 0}
         >
           {t('common:continue')}
         </Button>

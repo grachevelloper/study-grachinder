@@ -8,7 +8,9 @@ import {useScrollDirection} from './hooks/use-scroll-direction';
 
 import styles from './carousel.module.css';
 
-const MOCK_USERS = [
+import type {User} from '~shared/typings/user';
+
+const MOCK_USERS: Partial<User>[] = [
   {
     name: 'Добрыня Никитич',
     bio: 'Богатырь земли русской. Ищу спутницу жизни, с которой можно и в поход, и за стол праздничный. Люблю коней, баню и былины сказывать.',
@@ -18,6 +20,10 @@ const MOCK_USERS = [
       'https://3.downloader.disk.yandex.ru/preview/3f19679911fed78a252d41d1cad6677b1365bf5f377dc07f1b8616b67ad9520b/inf/jkk3Y7EBMq8COZs_yYwMI8y4uhJcZvSElP3uM015Ar3WfuCknGQOObjJbPwlaWcwLf4llqoThsUE5TmDfR6Jog%3D%3D?uid=845898402&filename=VRS00170.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=845898402&tknv=v3&size=3456x1960',
       'https://3.downloader.disk.yandex.ru/preview/29a88b8c036e4421786fe462bb0965af7ac7680167d8f7cf0c8420943e5c1637/inf/rhh5owv3u4LlJD9vtqC-iDWDvyy9Cr59MFxuxuvkFqo5AuLwtI0Xi48sgwikU3Wpyl3CUgbkN3rg46QCtI2fOg%3D%3D?uid=845898402&filename=VRS00110.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=845898402&tknv=v3&size=3456x1960',
     ],
+    gender: 'female',
+    age: 100,
+    children_count: 1,
+    city_id: 1,
   },
   {
     name: 'Грачичич',
@@ -26,10 +32,14 @@ const MOCK_USERS = [
     avatar_urls: [
       'https://3.downloader.disk.yandex.ru/preview/29a88b8c036e4421786fe462bb0965af7ac7680167d8f7cf0c8420943e5c1637/inf/rhh5owv3u4LlJD9vtqC-iDWDvyy9Cr59MFxuxuvkFqo5AuLwtI0Xi48sgwikU3Wpyl3CUgbkN3rg46QCtI2fOg%3D%3D?uid=845898402&filename=VRS00110.jpg&disposition=inline&hash=&limit=0&content_type=image%2Fjpeg&owner_uid=845898402&tknv=v3&size=3456x1960',
     ],
+    gender: 'male',
+    age: 20,
+    children_count: 0,
+    city_id: 1,
   },
 ];
 
-export default () => {
+const CarouselPage = () => {
   const [isBottomSheetOpen, setBottomSheetOpen] = useState<boolean>(false);
   const {scrollDirection, scrollY} = useScrollDirection({
     threshold: BOTTOM_SHEET_TRESHOLD_PX,
@@ -54,11 +64,7 @@ export default () => {
     <Flex className={styles.carousel} justify='center'>
       <AntCarousel dots={false} draggable vertical>
         {MOCK_USERS.map((user) => (
-          <Swipe
-            onClick={handleCardClick}
-            user={user}
-            key={user.avatar_urls[0]}
-          />
+          <Swipe onClick={handleCardClick} user={user as User} key={user.bio} />
         ))}
       </AntCarousel>
       <UserInfo
@@ -70,3 +76,5 @@ export default () => {
     </Flex>
   );
 };
+
+export default CarouselPage;

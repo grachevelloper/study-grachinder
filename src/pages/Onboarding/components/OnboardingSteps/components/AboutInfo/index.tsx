@@ -39,7 +39,7 @@ export const AboutInfo = ({onSumbit, onBack, loading}: AboutInfoProps) => {
 
       <div className={classNames(baseStyles.fadeItem, baseStyles.delay1)}>
         <Form.Item
-          name='about'
+          name='bio'
           label={
             <Text strong>
               {t('auth.about.about_label')}

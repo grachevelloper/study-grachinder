@@ -1,9 +1,3 @@
-.container {
-  height: 70vh;
-  position: relative;
-  overflow: hidden;
-}
-
 .card {
   position: relative;
   width: 100%;
@@ -19,6 +13,13 @@
 
 .slider {
   width: 100%;
+  height: 100%;
+}
+
+.slider :global(.slick-list),
+.slider :global(.slick-track),
+.slider :global(.slick-slide),
+.slider :global(.slick-slide > div) {
   height: 100%;
 }
 
@@ -42,15 +43,4 @@
   padding: 20px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
   color: white;
-}
-
-.empty {
-  height: 100vh;
-  text-align: center;
-}
-
-@media (min-width: 768px) {
-  .container {
-    aspect-ratio: 9 / 19.5;
-  }
 }

@@ -1,4 +1,4 @@
-import Icon, {
+import {
   UserOutlined,
   CalendarOutlined,
   EnvironmentOutlined,
@@ -18,7 +18,7 @@ interface BottomSheetInfoProps {
   open?: boolean;
 }
 
-export default ({open, onClose, user}: BottomSheetInfoProps) => {
+const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
   return (
     <Drawer
@@ -56,10 +56,10 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
             {/* @ts-expect-error - динамический ключ i18n */}
             <UserOutlined /> {t(`auth.main_info.gender_${user.gender}`)}
           </Text>
-          {user.childrenCount !== undefined && (
+          {user.children_count !== undefined && (
             <Text className={styles.infoItem}>
               <HeartOutlined /> {t('auth.baptism_info.children_label')}:{' '}
-              {user.childrenCount}
+              {user.children_count}
             </Text>
           )}
         </Flex>
@@ -75,7 +75,7 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
             {t('auth.preview.about_label')}
           </Title>
           <Text className={styles.about}>
-            {user.about || t('auth.preview.about_placeholder')}
+            {user.bio || t('auth.preview.about_placeholder')}
           </Text>
         </div>
 
@@ -100,6 +100,8 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
         <Button
           type='primary'
           size='large'
+          variant='filled'
+          color='primary'
           block
           className={styles.actionButton}
         >
@@ -109,3 +111,4 @@ export default ({open, onClose, user}: BottomSheetInfoProps) => {
     </Drawer>
   );
 };
+export default BottomSheet;

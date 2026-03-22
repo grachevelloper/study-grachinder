@@ -49,6 +49,7 @@
 .delay5 { animation-delay: 1.5s; }
 .delay6 { animation-delay: 1.8s; }
 
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -78,7 +79,12 @@
   margin-top: 24px;
 }
 
-/* Медиа-запросы */
+@media ((min-width: 1200px) and (max-width: 1400px)){
+  .form_wrapper{
+    max-width: 500px;
+  }
+}
+
 @media (max-width: 480px) {
   .title {
     font-size: 24px !important;

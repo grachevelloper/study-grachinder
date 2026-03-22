@@ -3,3 +3,9 @@
     right: 5%;
     position: relative;
 }
+
+@media(min-width: 1200px){
+  .onboarding{
+    padding: 0 20px;
+  }
+}

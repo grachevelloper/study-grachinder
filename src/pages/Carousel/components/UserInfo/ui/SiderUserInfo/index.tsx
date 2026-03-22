@@ -11,21 +11,16 @@ import styles from './sider-user-info.module.css';
 
 const {Title, Text} = Typography;
 
-export const MOCK_USER = {
-  name: 'Добрыня Никитич',
-  age: 33,
-  city: 'Муром',
-  about:
-    'Богатырь земли русской. Ищу спутницу жизни, с которой можно и в поход, и за стол праздничный. Люблю коней, баню и былины сказывать.',
-  interests: ['interests.faith', 'interests.nature', 'interests.history'],
-  baptismDate: '2020-01-19',
-  childrenCount: 0,
-  maritalStatus: 'single',
-  gender: 'male',
-};
-
 interface UserCardProps {
-  user: typeof MOCK_USER;
+  user: {
+    name: string;
+    age?: number;
+    city?: string;
+    gender?: string;
+    children_count?: number;
+    about?: string;
+    interests?: string[];
+  };
 }
 
 const SiderUserInfo = ({user}: UserCardProps) => {
@@ -57,10 +52,10 @@ const SiderUserInfo = ({user}: UserCardProps) => {
           {/* @ts-expect-error - динамический ключ i18n */}
           <UserOutlined /> {t(`auth.main_info.gender_${user.gender}`)}
         </Text>
-        {user.childrenCount !== undefined && (
+        {user.children_count !== undefined && (
           <Text className={styles.infoItem}>
             <HeartOutlined /> {t('auth.baptism_info.children_label')}:{' '}
-            {user.childrenCount}
+            {user.children_count}
           </Text>
         )}
       </Flex>
@@ -81,7 +76,7 @@ const SiderUserInfo = ({user}: UserCardProps) => {
           {t('auth.preview.interests_label')}
         </Title>
         <Flex wrap='wrap' gap={8} className={styles.interests}>
-          {user.interests?.map((interest) => (
+          {user.interests?.map((interest: string) => (
             <Tag key={interest} className={styles.interestTag}>
               {/* @ts-expect-error - динамический ключ i18n */}
               {t(`auth.interests.${interest}`)}

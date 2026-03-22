@@ -1,5 +1,7 @@
 import {Flex, Form} from 'antd';
-import {useCallback} from 'react';
+import {useCallback, useEffect} from 'react';
+
+import {useUserStorage} from '../../hooks/useUserStorage';
 
 import {AboutInfo} from './components/AboutInfo';
 import {BaptismInfo} from './components/BaptismInfo';
@@ -16,21 +18,33 @@ import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
 import {useLocalStorage} from '~shared/hooks/useLocalStorage';
 
 export const OnboadringSteps = () => {
-  const [form] = Form.useForm<any>();
+  const [form] = Form.useForm();
+  const {user, updateUser} = useUserStorage();
   const [stepCount, setStep] = useLocalStorage<number>(
     ONBOARDING_STEP_COUNT_KEY,
     0
   );
 
+  useEffect(() => {
+    form.setFieldsValue(user);
+  }, []);
+
+  const handleValuesChange = (_: unknown, allValues: unknown) => {
+    updateUser(allValues as Parameters<typeof updateUser>[0]);
+  };
+
   const handleNextStep = () => {
-    setStep((prev) => prev + 1);
-    AuthEmitter.emit(AUTH_EVENT, stepCount + 1);
+    if (stepCount !== 5) {
+      setStep((prev) => prev + 1);
+      AuthEmitter.emit(AUTH_EVENT, stepCount + 1);
+    }
   };
 
   const handlePrevStep = () => {
     setStep((prev) => prev - 1);
     AuthEmitter.emit(AUTH_EVENT, stepCount - 1);
   };
+
   const handleStepChange = (newStep: number) => {
     if (newStep !== stepCount) {
       setStep(newStep);
@@ -45,7 +59,9 @@ export const OnboadringSteps = () => {
         return <Register onSumbit={handleNextStep} loading={false} />;
       }
       case 1: {
-        return <MainInfo onSumbit={handleNextStep} loading={false} />;
+        return (
+          <MainInfo onSumbit={handleNextStep} loading={false} form={form} />
+        );
       }
       case 2: {
         return (
@@ -85,12 +101,15 @@ export const OnboadringSteps = () => {
       }
     }
   }, [stepCount, handleNextStep]);
+
   return (
     <Form
       variant='filled'
       scrollToFirstError
       className={styles.form_wrapper}
       form={form}
+      onValuesChange={handleValuesChange}
+      layout='vertical'
     >
       <Flex
         vertical

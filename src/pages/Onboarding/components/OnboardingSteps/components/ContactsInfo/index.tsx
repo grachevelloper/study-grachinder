@@ -1,14 +1,14 @@
-import {PhoneOutlined, MailOutlined, SendOutlined} from '@ant-design/icons';
+import {MailOutlined, SendOutlined} from '@ant-design/icons';
 import {Typography, Button, Form, Flex, Input} from 'antd';
 import classNames from 'classnames';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
+import {useNavigate} from 'react-router-dom';
 
 import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './contacts-info.module.css';
 
-import type {UserFormData} from '~shared/typings/user';
 
 const {Title, Text} = Typography;
 
@@ -18,10 +18,6 @@ interface ContactsInfoProps {
   loading: boolean;
 }
 
-interface ContactsInfoFormData extends Pick<
-  UserFormData,
-  'telegram' | 'email' | 'phone'
-> {}
 
 export const ContactsInfo = ({
   onSumbit,
@@ -29,10 +25,13 @@ export const ContactsInfo = ({
   loading,
 }: ContactsInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
+  const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
       onSumbit();
+
+      navigate('/');
     } catch (error) {
       console.error('Validation failed:', error);
     }
@@ -69,32 +68,6 @@ export const ContactsInfo = ({
 
       <div className={classNames(baseStyles.fadeItem, baseStyles.delay2)}>
         <Form.Item
-          name='phone'
-          label={
-            <Text strong>
-              {t('auth.contacts.phone_label')}
-              <Text type='secondary'> ({t('common:optional')})</Text>
-            </Text>
-          }
-          rules={[
-            {
-              pattern: /^[\+\d\s\(\)\-]+$/,
-              message: t('auth.contacts.phone_invalid'),
-            },
-          ]}
-          className={styles.formItem}
-          layout='vertical'
-        >
-          <Input
-            size='large'
-            placeholder='+7 (999) 123-45-67'
-            prefix={<PhoneOutlined />}
-          />
-        </Form.Item>
-      </div>
-
-      <div className={classNames(baseStyles.fadeItem, baseStyles.delay3)}>
-        <Form.Item
           name='email'
           label={
             <Text strong>
@@ -116,7 +89,7 @@ export const ContactsInfo = ({
 
       <Flex
         gap={12}
-        className={classNames(baseStyles.fadeItem, baseStyles.delay4)}
+        className={classNames(baseStyles.fadeItem, baseStyles.delay3)}
       >
         <Button size='large' block onClick={onBack}>
           {t('common:back')}

@@ -18,7 +18,7 @@ import {useAuth} from '~shared/providers/Auth';
 
 const {Title, Text} = Typography;
 
-export default () => {
+const OnnboardingPage = () => {
   const {user} = useAuth();
   const [api, contextHolder] = notification.useNotification();
   const {t} = useTranslation('auth');
@@ -29,7 +29,7 @@ export default () => {
     ONBOARDING_STEP_COUNT_KEY
   );
 
-  const isMobile = window.innerWidth <= 768;
+  const isDesktop = window.innerWidth > 1200;
 
   const handleStepChange = (newStep: number) => {
     if (newStep !== stepCount) {
@@ -112,8 +112,10 @@ export default () => {
     >
       {contextHolder}
       <OnboadringSteps />
-      {stepCount !== 0 && !isMobile && <Preview />}
+      {stepCount !== 0 && isDesktop && <Preview />}
       {renderFloatButtonToSignIn}
     </Flex>
   );
 };
+
+export default OnnboardingPage;
