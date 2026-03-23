@@ -36,30 +36,14 @@
   width: 100%;
 }
 
-.fadeItem {
-  opacity: 0;
-  animation: fadeIn 0.5s ease forwards;
-  width: 100%;
-}
+.fadeItem { composes: fadeItem from '../../../../shared/styles/animations.module.css'; }
+.delay1 { composes: delay1 from '../../../../shared/styles/animations.module.css'; }
+.delay2 { composes: delay2 from '../../../../shared/styles/animations.module.css'; }
+.delay3 { composes: delay3 from '../../../../shared/styles/animations.module.css'; }
+.delay4 { composes: delay4 from '../../../../shared/styles/animations.module.css'; }
+.delay5 { composes: delay5 from '../../../../shared/styles/animations.module.css'; }
+.delay6 { composes: delay6 from '../../../../shared/styles/animations.module.css'; }
 
-.delay1 { animation-delay: 0.3s; }
-.delay2 { animation-delay: 0.6s; }
-.delay3 { animation-delay: 0.9s; }
-.delay4 { animation-delay: 1.2s; }
-.delay5 { animation-delay: 1.5s; }
-.delay6 { animation-delay: 1.8s; }
-
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 @keyframes fadeInTop {
   from {
     opacity: 0;

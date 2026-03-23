@@ -16,13 +16,6 @@
   height: 100%;
 }
 
-.slider :global(.slick-list),
-.slider :global(.slick-track),
-.slider :global(.slick-slide),
-.slider :global(.slick-slide > div) {
-  height: 100%;
-}
-
 .slide {
   width: 100%;
   height: 100%;
@@ -39,7 +32,7 @@
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 90%;
+  width: 100%;
   padding: 20px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.85), transparent);
   color: white;

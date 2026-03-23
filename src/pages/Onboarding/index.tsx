@@ -109,6 +109,9 @@ const OnnboardingPage = () => {
       className={styles.onboarding}
       justify='space-around'
       align='flex-start'
+      style={{
+        right: isDesktop ? '5%' : '0',
+      }}
     >
       {contextHolder}
       <OnboadringSteps />

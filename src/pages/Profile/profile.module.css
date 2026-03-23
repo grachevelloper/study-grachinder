@@ -1,0 +1,67 @@
+.page {
+  min-height: 100vh;
+  padding: 24px 16px 48px;
+  overflow: auto ;
+}
+
+.content {
+  width: 100%;
+  max-width: 600px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.sectionTitle {
+  align-self: flex-start;
+  margin-bottom: 4px !important;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+}
+
+.fieldValue {
+  font-size: 16px;
+}
+
+.empty {
+  color: rgba(0, 0, 0, 0.35);
+  font-style: italic;
+}
+
+.interestsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.divider {
+  margin: -10px 0 !important;
+}
+
+@media (max-width: 768px) {
+  .content {
+    max-width: 100%;
+  }
+}
+
+.title{
+  margin-bottom: 0;
+  margin-top: 0;
+}

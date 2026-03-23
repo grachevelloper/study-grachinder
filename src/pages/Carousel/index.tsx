@@ -1,5 +1,7 @@
-import {Flex, Carousel as AntCarousel} from 'antd';
+import {UserOutlined} from '@ant-design/icons';
+import {Flex, Carousel as AntCarousel, FloatButton, theme} from 'antd';
 import {useEffect, useRef, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
 import {Swipe} from './components/Swipe';
 import UserInfo from './components/UserInfo';
@@ -40,17 +42,21 @@ const MOCK_USERS: Partial<User>[] = [
 ];
 
 const CarouselPage = () => {
+  const navigate = useNavigate();
   const [isBottomSheetOpen, setBottomSheetOpen] = useState<boolean>(false);
   const {scrollDirection, scrollY} = useScrollDirection({
     threshold: BOTTOM_SHEET_TRESHOLD_PX,
   });
-  const isMobile = useRef(window.innerWidth <= 768);
+  const {
+    token: {colorPrimary, colorBgBase},
+  } = theme.useToken();
+  const isMobile = window.innerWidth <= 768;
 
   useEffect(() => {
     if (
       scrollDirection === 'down' &&
       scrollY > BOTTOM_SHEET_TRESHOLD_PX &&
-      isMobile.current
+      isMobile
     ) {
       setBottomSheetOpen(true);
       console.log('🟢 ОТКРЫВАЕМ BOTTOM SHEET');
@@ -61,8 +67,22 @@ const CarouselPage = () => {
   };
 
   return (
-    <Flex className={styles.carousel} justify='center'>
-      <AntCarousel dots={false} draggable vertical>
+    <Flex
+      className={styles.carousel}
+      justify='center'
+      align='center'
+      style={{backgroundColor: colorBgBase}}
+      gap='0'
+    >
+      <AntCarousel
+        dots={false}
+        draggable
+        vertical
+        className={styles.cards}
+        style={{
+          aspectRatio: isMobile ? undefined : '9 / 19.5',
+        }}
+      >
         {MOCK_USERS.map((user) => (
           <Swipe onClick={handleCardClick} user={user as User} key={user.bio} />
         ))}
@@ -71,7 +91,20 @@ const CarouselPage = () => {
         open={isBottomSheetOpen}
         user={{}}
         onClose={handleCardClick}
-        isMobile={isMobile.current}
+        isMobile={isMobile}
+      />
+      <FloatButton
+        icon={<UserOutlined style={{color: colorPrimary}} size={32} />}
+        type='primary'
+        style={{
+          insetInlineEnd: 24,
+          right: 10,
+          top: 10,
+          bottom: '100%',
+          height: 32,
+          width: 32,
+        }}
+        onClick={() => navigate('/profile')}
       />
     </Flex>
   );

@@ -2,10 +2,14 @@ import {useQuery} from '@tanstack/react-query';
 
 import type {City} from '~shared/typings/city';
 import type {Interest} from '~shared/typings/interest';
+import type {UserResponse} from '~shared/typings/user';
 
 import {query, queryClient} from '~shared/config/api';
 
 export const sharedApi = {
+    getMe: () =>
+        query.get<UserResponse>('/users/me'),
+
     getInterests: () =>
         query.get<Interest[]>('/interests'),
 
@@ -14,9 +18,16 @@ export const sharedApi = {
 };
 
 export const SHARED_KEYS = {
+    me: ['me'] as const,
     interests: ['interests'] as const,
     cities: (search?: string) => ['cities', search] as const,
 };
+
+export const useGetMe = () =>
+    useQuery({
+        queryKey: SHARED_KEYS.me,
+        queryFn: sharedApi.getMe,
+    });
 
 export const useInterests = () =>
     useQuery({

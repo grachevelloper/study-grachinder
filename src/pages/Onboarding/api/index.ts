@@ -1,7 +1,8 @@
-import {useMutation, useQuery} from '@tanstack/react-query';
+import {useMutation} from '@tanstack/react-query';
 
 import type {UserResponse} from '~shared/typings/user';
 
+import {SHARED_KEYS} from '~shared/api';
 import {query, queryClient} from '~shared/config/api';
 
 // Step 1 payload (Register) is handled by signInApi.register
@@ -34,9 +35,6 @@ interface ContactsPayload {
 }
 
 export const onboardingApi = {
-    getMe: () =>
-        query.get<UserResponse>('/users/me'),
-
     updateMainInfo: (data: MainInfoPayload) =>
         query.patch<UserResponse>('/onboarding/main', data),
 
@@ -61,18 +59,8 @@ export const onboardingApi = {
         query.patch<UserResponse>('/onboarding/contacts', data),
 };
 
-export const ONBOARDING_KEYS = {
-    me: ['me'] as const,
-};
-
 const invalidateMe = () =>
-    queryClient.invalidateQueries({queryKey: ONBOARDING_KEYS.me});
-
-export const useGetMe = () =>
-    useQuery({
-        queryKey: ONBOARDING_KEYS.me,
-        queryFn: onboardingApi.getMe,
-    });
+    queryClient.invalidateQueries({queryKey: SHARED_KEYS.me});
 
 export const useUpdateMainInfo = () =>
     useMutation({

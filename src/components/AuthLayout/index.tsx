@@ -2,7 +2,6 @@ import {Col, Flex, Image, Row, theme} from 'antd';
 import {Fragment} from 'react';
 import {Outlet, useLocation} from 'react-router-dom';
 
-
 import styles from './auth-layout.module.css';
 
 import layoutImg from '~assets/layout.png';
@@ -20,6 +19,7 @@ export const AuthLayout = () => {
   } = theme.useToken();
 
   const isUserMeta = location.pathname === '/auth/signup' && stepCount >= 1;
+  const isDesktop = window.innerWidth > 1200;
 
   const handleStepChange = (newStep: number) => {
     if (newStep !== stepCount) {
@@ -57,7 +57,11 @@ export const AuthLayout = () => {
             align={isUserMeta ? 'top' : 'middle'}
             className={styles.children}
             style={{
-              margin: isUserMeta ? '50px 0 0 40px' : '15% auto 0',
+              margin: isDesktop
+                ? isUserMeta
+                  ? '50px 0 0 40px'
+                  : '15% auto 0'
+                : undefined,
             }}
           >
             <Outlet />

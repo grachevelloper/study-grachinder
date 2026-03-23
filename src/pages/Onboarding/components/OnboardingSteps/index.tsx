@@ -37,6 +37,9 @@ export const OnboadringSteps = () => {
     if (stepCount !== 5) {
       setStep((prev) => prev + 1);
       AuthEmitter.emit(AUTH_EVENT, stepCount + 1);
+    } else {
+      setStep(0);
+      AuthEmitter.emit(AUTH_EVENT, 0);
     }
   };
 

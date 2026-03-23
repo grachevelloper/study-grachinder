@@ -52,11 +52,6 @@ export const Swipe = ({user, onLike, onDislike, onClick}: SwipeProps) => {
       >
         <UserCard user={user} />
       </div>
-
-      <Flex gap='24px' justify='center' className={styles.buttons}>
-        <Button size='large' shape='circle' danger onClick={handleDislike} />
-        <Button size='large' shape='circle' type='primary' onClick={handleLike} />
-      </Flex>
     </Flex>
   );
 };
