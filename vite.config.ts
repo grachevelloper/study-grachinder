@@ -19,5 +19,16 @@ export default defineConfig({
       '~locales': path.resolve(__dirname, './src/locales'),
       '~assets': path.resolve(__dirname, './src/assets')
     }
-  }
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-antd': ['antd', '@ant-design/icons'],
+          'vendor-query': ['@tanstack/react-query'],
+        },
+      },
+    },
+  },
 })

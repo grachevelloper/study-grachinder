@@ -1,4 +1,4 @@
-import {Button, Flex, Typography} from 'antd';
+import {Flex, Typography} from 'antd';
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
@@ -20,29 +20,13 @@ interface SwipeProps {
 
 export const Swipe = ({
   user,
-  onLike,
-  onDislike,
+  onLike: _onLike,
+  onDislike: _onDislike,
   onClick,
   isActive = false,
 }: SwipeProps) => {
   const {t} = useTranslation('carousel');
-  const [direction, setDirection] = useState<'like' | 'dislike' | null>(null);
-
-  const handleLike = () => {
-    setDirection('like');
-    setTimeout(() => {
-      onLike?.(user);
-      setDirection(null);
-    }, 300);
-  };
-
-  const handleDislike = () => {
-    setDirection('dislike');
-    setTimeout(() => {
-      onDislike?.(user);
-      setDirection(null);
-    }, 300);
-  };
+  const [direction, _setDirection] = useState<'like' | 'dislike' | null>(null);
 
   if (!user) {
     return (

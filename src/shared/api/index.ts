@@ -8,13 +8,13 @@ import {query, queryClient} from '~shared/config/api';
 
 export const sharedApi = {
     getMe: () =>
-        query.get<UserResponse>('/users/me'),
+        query.get<UserResponse>('/user/me'),
 
     getInterests: () =>
-        query.get<Interest[]>('/interests'),
+        query.get<Interest[]>('/interest'),
 
     getCities: (search?: string) =>
-        query.get<City[]>('/cities', {params: {search}}),
+        query.get<City[]>('/city', {params: {search}}),
 };
 
 export const SHARED_KEYS = {

@@ -1,7 +1,10 @@
 import {UserOutlined, LockOutlined} from '@ant-design/icons';
-import {Flex, Input, Button, Typography, Grid} from 'antd';
+import {Flex, Input, Button, Typography, Grid, message} from 'antd';
+import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useNavigate} from 'react-router-dom';
+
+import {useSignIn} from './api';
 
 import styles from './signin.module.css';
 
@@ -13,6 +16,9 @@ const SignInPage = () => {
   const navigate = useNavigate();
   const screens = useBreakpoint();
 
+  const [form, setForm] = useState({email: '', password: ''});
+  const signIn = useSignIn();
+
   const handleToRegister = () => {
     navigate('/auth/signup', {
       state: {
@@ -22,7 +28,11 @@ const SignInPage = () => {
   };
 
   const handleSubmit = () => {
-    navigate('/');
+    if (!form.email || !form.password) return;
+    signIn.mutate(form, {
+      onSuccess: () => navigate('/'),
+      onError: () => message.error(t('auth.signin.error')),
+    });
   };
 
   const getInputSize = () => {
@@ -81,6 +91,8 @@ const SignInPage = () => {
           prefix={<UserOutlined />}
           size={getInputSize()}
           placeholder={t('name.placeholder')}
+          value={form.email}
+          onChange={(e) => setForm((prev) => ({...prev, email: e.target.value}))}
           style={{
             fontSize: screens.md ? '16px' : '14px',
           }}
@@ -91,6 +103,9 @@ const SignInPage = () => {
           size={getInputSize()}
           type='password'
           placeholder={t('password.placeholder')}
+          value={form.password}
+          onChange={(e) => setForm((prev) => ({...prev, password: e.target.value}))}
+          onPressEnter={handleSubmit}
           style={{
             fontSize: screens.md ? '16px' : '14px',
           }}
@@ -99,11 +114,11 @@ const SignInPage = () => {
         <Button
           type='primary'
           variant='filled'
-          size={getInputSize()}
           color='primary'
+          size={getInputSize()}
           className={styles.button}
           onClick={handleSubmit}
-          loading={true}
+          loading={signIn.isPending}
           style={{
             fontSize: screens.md ? '16px' : '14px',
             marginTop: screens.md ? '8px' : '4px',

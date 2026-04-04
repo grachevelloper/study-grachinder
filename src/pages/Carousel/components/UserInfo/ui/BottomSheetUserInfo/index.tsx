@@ -55,8 +55,7 @@ const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
             <CalendarOutlined /> {t('auth.preview.age_format', {age: user.age})}
           </Text>
           <Text className={styles.infoItem}>
-            {/* @ts-expect-error - динамический ключ i18n */}
-            <UserOutlined /> {t(`auth.main_info.gender_${user.gender}`)}
+              <UserOutlined /> {t(`auth.main_info.gender_${user.gender}` as any)}
           </Text>
           {user.children_count !== undefined && (
             <Text className={styles.infoItem}>

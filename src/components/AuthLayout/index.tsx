@@ -5,6 +5,7 @@ import {Outlet, useLocation} from 'react-router-dom';
 import styles from './auth-layout.module.css';
 
 import layoutImg from '~assets/layout.png';
+import {ErrorBoundary} from '~components/ErrorBoundary';
 import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
 import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
 import {useLocalStorage} from '~shared/hooks/useLocalStorage';
@@ -44,7 +45,7 @@ export const AuthLayout = () => {
             <Image
               src={layoutImg}
               preview={false}
-              height='100vh'
+              height='100dvh'
               width='125px'
               className={styles.image}
             />
@@ -60,11 +61,13 @@ export const AuthLayout = () => {
               margin: isDesktop
                 ? isUserMeta
                   ? '50px 0 0 40px'
-                  : '15% auto 0'
+                  : '0 auto'
                 : undefined,
             }}
           >
-            <Outlet />
+            <ErrorBoundary scope='auth'>
+              <Outlet />
+            </ErrorBoundary>
           </Flex>
         </Col>
       </Row>

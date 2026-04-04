@@ -1,3 +1,25 @@
 {
-  "preview.empty": "Fill in your profile information to see the preview"
+  "continue": "Continue",
+  "back": "Back",
+  "optional": "Optional",
+  "like": "Like",
+  "finish": "Finish",
+  "saved": "Saved",
+  "preview.empty": "Fill in your profile information to see the preview",
+
+  "error.global.title": "Something went wrong",
+  "error.global.description": "An unexpected error occurred. Please reload the page and try again.",
+  "error.global.retry": "Reload page",
+
+  "error.feed.title": "Could not load profiles",
+  "error.feed.description": "Failed to fetch the user list. Please try again.",
+  "error.feed.retry": "Try again",
+
+  "error.profile.title": "Profile unavailable",
+  "error.profile.description": "Failed to load profile data. Please try again.",
+  "error.profile.retry": "Try again",
+
+  "error.auth.title": "Sign in failed",
+  "error.auth.description": "Could not complete the operation. Please try again.",
+  "error.auth.retry": "Try again"
 }

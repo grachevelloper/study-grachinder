@@ -1,44 +1,44 @@
 import {useMutation} from '@tanstack/react-query';
 
-import type {UserResponse} from '~shared/typings/user';
+import {query, queryClient, saveToken, removeToken} from '~shared/config/api';
 
-import {query, queryClient} from '~shared/config/api';
-
-interface SignInPayload {
+interface AuthPayload {
     email: string;
     password: string;
 }
 
-interface RegisterPayload {
-    email: string;
-    password: string;
+interface AuthResponse {
+    jwt: string;
 }
 
 export const signInApi = {
-    signIn: (data: SignInPayload) =>
-        query.post<UserResponse>('/auth/signin', data),
+    signIn: (data: AuthPayload) =>
+        query.post<AuthResponse>('/user/login', data),
 
-    register: (data: RegisterPayload) =>
-        query.post<UserResponse>('/auth/register', data),
+    register: (data: AuthPayload) =>
+        query.post<AuthResponse>('/user/register', data),
 
     signOut: () =>
-        query.post('/auth/signout'),
+        query.post('/user/logout'),
 };
 
 export const useSignIn = () =>
     useMutation({
         mutationFn: signInApi.signIn,
+        onSuccess: ({jwt}) => saveToken(jwt),
     });
 
 export const useRegister = () =>
     useMutation({
         mutationFn: signInApi.register,
+        onSuccess: ({jwt}) => saveToken(jwt),
     });
 
 export const useSignOut = () =>
     useMutation({
         mutationFn: signInApi.signOut,
         onSuccess: () => {
+            removeToken();
             queryClient.clear();
         },
     });

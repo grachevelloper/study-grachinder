@@ -15,6 +15,7 @@ export default tseslint.config(
             '**/vite.config.ts',
             '**/*.config.js',
             '**/*.config.ts',
+            'dist/**',
         ],
     },
     {

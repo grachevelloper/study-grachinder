@@ -1,12 +1,26 @@
 import { QueryClient } from '@tanstack/react-query';
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios';
+import { JWT_TOKEN_KEY } from '~shared/constants';
 
+const apURL = import.meta.env.VITE_API_URL
+
+export const saveToken = (jwt: string) => sessionStorage.setItem(JWT_TOKEN_KEY, jwt);
+export const getToken = () => sessionStorage.getItem(JWT_TOKEN_KEY);
+export const removeToken = () => sessionStorage.removeItem(JWT_TOKEN_KEY);
 
 export const apiAxios: AxiosInstance = axios.create({
-    baseURL: `/api/v1`,
+    baseURL: `${apURL}/api/v1`,
     timeout: 3000,
     headers: { 'Content-Type': 'application/json' },
     withCredentials: true,
+});
+
+apiAxios.interceptors.request.use((config) => {
+    const token = getToken();
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
 });
 
 apiAxios.interceptors.response.use(
@@ -14,7 +28,7 @@ apiAxios.interceptors.response.use(
     async (error: any) => {
         const originalRequest = error.config;
 
-        if (originalRequest.url?.includes('/auth/refresh')) {
+        if (originalRequest.url?.includes('/user/refresh')) {
             if (error.response?.status === 401) {
                 console.error('Refresh token expired');
                 if (!window.location.pathname.startsWith('/auth')) {
@@ -30,7 +44,7 @@ apiAxios.interceptors.response.use(
             !originalRequest._retry
         ) {
             try {
-                await apiAxios.post('/auth/refresh');
+                await apiAxios.post('/user/refresh');
                 return apiAxios(originalRequest);
             } catch (refreshError) {
                 console.error('Token refresh failed:', refreshError);

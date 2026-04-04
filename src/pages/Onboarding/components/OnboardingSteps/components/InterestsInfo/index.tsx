@@ -32,7 +32,7 @@ export const InterestsInfo = ({
   const {user, updateUser} = useUserStorage();
   const {data: interestsMap = {}} = useInterests();
   const [selectedInterests, setSelectedInterests] = useState<number[]>(
-    user.interests ?? []
+    user.interest_ids ?? []
   );
 
   const handleInterestClick = (id: number) => {
@@ -42,7 +42,7 @@ export const InterestsInfo = ({
 
     setSelectedInterests(newSelected);
     form.setFieldsValue({interests: newSelected});
-    updateUser({interests: newSelected});
+    updateUser({interest_ids: newSelected});
   };
 
   const handleSubmit = async () => {

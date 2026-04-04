@@ -1,23 +1,39 @@
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
-import {Button, Flex, Input, Typography} from 'antd';
-import {Fragment} from 'react';
+import {Button, Flex, Input, Typography, message} from 'antd';
+import {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import styles from './register.module.css';
 
 import type {StepProps} from '../../types';
 
-
+import {useRegister} from '~pages/SignIn/api';
 import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
 
 const {Title, Text} = Typography;
 
-export const Register = ({loading, onSumbit}: StepProps) => {
+export const Register = ({onSumbit}: StepProps) => {
   const {t} = useTranslation('auth');
+  const [form, setForm] = useState({email: '', password: '', passwordCheck: ''});
+  const register = useRegister();
+
+  const set = (field: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setForm((prev) => ({...prev, [field]: e.target.value}));
 
   const handleSubmit = async () => {
-    await onSumbit();
-    AuthEmitter.emit(AUTH_EVENT, 1);
+    if (!form.email || !form.password) return;
+    if (form.password !== form.passwordCheck) {
+      message.error(t('password_check.mismatch'));
+      return;
+    }
+    register.mutate({email: form.email, password: form.password}, {
+      onSuccess: async () => {
+        await onSumbit();
+        AuthEmitter.emit(AUTH_EVENT, 1);
+      },
+      onError: () => message.error(t('auth.registration.error')),
+    });
   };
 
   return (
@@ -39,18 +55,25 @@ export const Register = ({loading, onSumbit}: StepProps) => {
         prefix={<UserOutlined />}
         size='large'
         placeholder={t('name.placeholder')}
+        value={form.email}
+        onChange={set('email')}
       />
       <Input
         prefix={<LockOutlined />}
         size='large'
         type='password'
         placeholder={t('password.placeholder')}
+        value={form.password}
+        onChange={set('password')}
       />
       <Input
         prefix={<LockOutlined />}
         size='large'
         type='password'
         placeholder={t('password_check.placeholder')}
+        value={form.passwordCheck}
+        onChange={set('passwordCheck')}
+        onPressEnter={handleSubmit}
       />
 
       <Button
@@ -60,7 +83,7 @@ export const Register = ({loading, onSumbit}: StepProps) => {
         color='primary'
         className={styles.button}
         onClick={handleSubmit}
-        loading={loading}
+        loading={register.isPending}
       >
         {t('auth.registration.apply')}
       </Button>

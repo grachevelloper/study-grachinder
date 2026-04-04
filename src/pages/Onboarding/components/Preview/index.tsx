@@ -7,14 +7,11 @@ import styles from './preview.module.css';
 
 import {UserCard} from '~components/UserCard';
 
-const formatInterest = (interest: string) =>
-  interest.replace('interests.', '').replace(/_/g, ' ');
-
 export const Preview = () => {
   const {user} = useUserStorage();
   const {t} = useTranslation('common');
 
-  const hasBasicInfo = user?.name || user?.interests?.length > 0;
+  const hasBasicInfo = user?.name || (user?.interest_ids?.length ?? 0) > 0;
 
   if (!hasBasicInfo) {
     return (
@@ -29,7 +26,7 @@ export const Preview = () => {
 
   return (
     <div className={styles.container}>
-      <UserCard user={user} formatInterest={formatInterest} />
+      <UserCard user={user} />
     </div>
   );
 };

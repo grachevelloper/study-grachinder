@@ -1,67 +1,215 @@
 .page {
   min-height: 100vh;
-  padding: 24px 16px 48px;
-  overflow: auto ;
+  padding-bottom: 40px;
 }
 
-.content {
-  width: 100%;
-  max-width: 600px;
-}
-
-.header {
+/* ── Hero ─────────────────────────────────────────── */
+.hero {
   display: flex;
   align-items: center;
-  gap: 12px;
-  width: 100%;
-  margin-bottom: 8px;
+  gap: 16px;
+  padding: 56px 20px 20px;
+  border-bottom: 1px solid;
+}
+
+.heroInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.heroName {
+  margin: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.heroMeta {
+  margin-top: 8px;
+}
+
+.mainForm {
+  flex: 1;
+  min-width: 0;
+}
+
+.formItemInline {
+  margin-bottom: 0;
+  flex: 1;
+  min-width: 160px;
+}
+
+.formItemInlineSmall {
+  margin-bottom: 0;
+  width: 120px;
+}
+
+.inlineActions {
+  margin-top: 8px;
+}
+
+/* ── Content ─────────────────────────────────────── */
+.content {
+  max-width: 720px;
 }
 
 .section {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
+  padding: 18px 20px;
 }
 
-.sectionTitle {
-  align-self: flex-start;
-  margin-bottom: 4px !important;
+.sectionHeader {
+  margin-bottom: 14px;
+}
+
+.sectionLabel {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  opacity: 0.55;
+}
+
+.editBtn {
+  opacity: 0.4;
+  transition: opacity 0.15s;
+}
+
+.section:hover .editBtn,
+.editBtn:hover {
+  opacity: 1;
+}
+
+/* ── Avatar ──────────────────────────────────────── */
+.avatarWrapper {
+  position: relative;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.18s;
+  font-size: 20px;
+  color: #fff;
+}
+
+.avatarWrapper:hover .avatarOverlay,
+.avatarWrapper:active .avatarOverlay {
+  opacity: 1;
+}
+
+/* ── Bio ─────────────────────────────────────────── */
+.bioText {
+  font-size: 16px;
+  line-height: 1.75;
+  margin-bottom: 0 !important;
+}
+
+/* ── Interests ───────────────────────────────────── */
+.interestTag {
+  cursor: pointer;
+  border-radius: 14px;
+  padding: 6px 14px;
+  font-size: 14px;
+  margin: 0;
+  transition: all 0.15s;
+  user-select: none;
+}
+
+.interestSelected {
+  font-weight: 600;
+}
+
+/* ── Field grid ──────────────────────────────────── */
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px 24px;
 }
 
 .field {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  width: 100%;
+}
+
+.fieldLabel {
+  font-size: 13px;
+  opacity: 0.45;
 }
 
 .fieldValue {
   font-size: 16px;
+  font-weight: 500;
+}
+
+/* ── Contacts ────────────────────────────────────── */
+.contactRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contactIcon {
+  font-size: 16px;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+/* ── Form items ──────────────────────────────────── */
+.formItem {
+  margin-bottom: 12px;
+}
+
+/* ── Misc ────────────────────────────────────────── */
+.divider {
+  margin: 0 !important;
 }
 
 .empty {
-  color: rgba(0, 0, 0, 0.35);
+  opacity: 0.35;
   font-style: italic;
+  font-size: 15px;
 }
 
-.interestsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+.bottomSpacer {
+  height: 40px;
 }
 
-.divider {
-  margin: -10px 0 !important;
-}
-
+/* ── Mobile ──────────────────────────────────────── */
 @media (max-width: 768px) {
-  .content {
-    max-width: 100%;
+  .hero {
+    padding: 52px 16px 16px;
+    gap: 14px;
+  }
+
+  .section {
+    padding: 16px;
+  }
+
+  .editBtn {
+    opacity: 0.5;
+  }
+
+  .fieldGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
   }
 }
 
-.title{
-  margin-bottom: 0;
-  margin-top: 0;
+@media (max-width: 480px) {
+  .fieldGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .formItemInline,
+  .formItemInlineSmall {
+    width: 100%;
+    min-width: unset;
+  }
 }

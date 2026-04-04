@@ -5,8 +5,6 @@ import type {UserResponse} from '~shared/typings/user';
 import {SHARED_KEYS} from '~shared/api';
 import {query, queryClient} from '~shared/config/api';
 
-// Step 1 payload (Register) is handled by signInApi.register
-
 interface MainInfoPayload {
     name: string;
     age: number;
@@ -14,7 +12,7 @@ interface MainInfoPayload {
 }
 
 interface BaptismInfoPayload {
-    baptismDate?: string; // ISO 8601
+    baptismDate?: string;
     marital_status?: 'single' | 'married' | 'divorced' | 'widowed';
     children_count?: number;
     city_id?: number;
@@ -36,27 +34,38 @@ interface ContactsPayload {
 
 export const onboardingApi = {
     updateMainInfo: (data: MainInfoPayload) =>
-        query.patch<UserResponse>('/onboarding/main', data),
+        query.patch<UserResponse>('/user/onboarding/main', data),
 
     uploadPhoto: (file: File) => {
         const formData = new FormData();
         formData.append('photo', file);
-        return query.post<{url: string}>('/onboarding/photo', formData, {
+        return query.post<{url: string}>('/user/onboarding/photo', formData, {
+            headers: {'Content-Type': 'multipart/form-data'},
+        });
+    },
+
+    uploadFiles: (files: File[]) => {
+        const formData = new FormData();
+        files.forEach((file) => formData.append('files', file));
+        return query.patch<void>('/user/onboarding/files', formData, {
             headers: {'Content-Type': 'multipart/form-data'},
         });
     },
 
     updateBaptismInfo: (data: BaptismInfoPayload) =>
-        query.patch<UserResponse>('/onboarding/baptism', data),
+        query.patch<UserResponse>('/user/onboarding/baptism', data),
 
     updateInterests: (data: InterestsPayload) =>
-        query.patch<UserResponse>('/onboarding/interests', data),
+        query.patch<UserResponse>('/user/onboarding/interests', data),
 
     updateBio: (data: BioPayload) =>
-        query.patch<UserResponse>('/onboarding/bio', data),
+        query.patch<UserResponse>('/user/onboarding/bio', data),
 
     updateContacts: (data: ContactsPayload) =>
-        query.patch<UserResponse>('/onboarding/contacts', data),
+        query.patch<UserResponse>('/user/onboarding/contacts', data),
+
+    finishOnboarding: () =>
+        query.post<void>('/user/onboarding/finish'),
 };
 
 const invalidateMe = () =>
@@ -71,6 +80,12 @@ export const useUpdateMainInfo = () =>
 export const useUploadPhoto = () =>
     useMutation({
         mutationFn: onboardingApi.uploadPhoto,
+        onSuccess: invalidateMe,
+    });
+
+export const useUploadFiles = () =>
+    useMutation({
+        mutationFn: onboardingApi.uploadFiles,
         onSuccess: invalidateMe,
     });
 
@@ -95,5 +110,11 @@ export const useUpdateBio = () =>
 export const useUpdateContacts = () =>
     useMutation({
         mutationFn: onboardingApi.updateContacts,
+        onSuccess: invalidateMe,
+    });
+
+export const useFinishOnboarding = () =>
+    useMutation({
+        mutationFn: onboardingApi.finishOnboarding,
         onSuccess: invalidateMe,
     });
