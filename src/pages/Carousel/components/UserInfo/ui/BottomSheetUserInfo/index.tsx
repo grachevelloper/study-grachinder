@@ -10,10 +10,12 @@ import {useTranslation} from 'react-i18next';
 
 import styles from './bottom-sheet-user-info.module.css';
 
+import type {User} from '~shared/typings/user';
+
 const {Title, Text} = Typography;
 
 interface BottomSheetInfoProps {
-  user: any;
+  user: User;
   onClose?: () => void;
   open?: boolean;
 }
@@ -38,7 +40,7 @@ const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
             </Title>
             <Text className={styles.city}>
               <EnvironmentOutlined />{' '}
-              {t('auth.preview.city_format', {city: user.city})}
+              {t('auth.preview.city_format', {city: user.city_id})}
             </Text>
           </div>
           <CloseOutlined
@@ -88,7 +90,7 @@ const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
             {t('auth.preview.interests_label')}
           </Title>
           <Flex wrap='wrap' gap={8} className={styles.interests}>
-            {user.interests?.map((interest: string) => (
+            {user.interest_ids?.map((interest: number) => (
               <Tag key={interest} className={styles.interestTag}>
                 {/* @ts-expect-error - динамический ключ i18n */}
                 {t(`auth.interests.${interest}`)}

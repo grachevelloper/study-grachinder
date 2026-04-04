@@ -12,7 +12,7 @@ export interface User {
     city_id: number;
     telegram: string;
     phone?: string | null;
-    interests: string[]
+    interest_ids: number[]
 }
 
 export type UserFormData = Omit<User, 'id'>

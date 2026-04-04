@@ -11,13 +11,20 @@ import {UserCard} from '~components/UserCard';
 const {Title} = Typography;
 
 interface SwipeProps {
-  user: Pick<User, 'name' | 'interests' | 'bio' | 'avatar_urls'>;
+  user: User;
   onClick: VoidFunction;
   onLike?: (user: any) => void;
   onDislike?: (user: any) => void;
+  isActive?: boolean;
 }
 
-export const Swipe = ({user, onLike, onDislike, onClick}: SwipeProps) => {
+export const Swipe = ({
+  user,
+  onLike,
+  onDislike,
+  onClick,
+  isActive = false,
+}: SwipeProps) => {
   const {t} = useTranslation('carousel');
   const [direction, setDirection] = useState<'like' | 'dislike' | null>(null);
 
@@ -50,7 +57,7 @@ export const Swipe = ({user, onLike, onDislike, onClick}: SwipeProps) => {
       <div
         className={`${styles.animWrapper} ${direction === 'like' ? styles.swipeTop : ''} ${direction === 'dislike' ? styles.swipeBottom : ''}`}
       >
-        <UserCard user={user} />
+        <UserCard user={user} isActive={isActive} />
       </div>
     </Flex>
   );

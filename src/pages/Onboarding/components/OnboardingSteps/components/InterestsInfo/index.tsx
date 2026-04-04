@@ -8,6 +8,7 @@ import baseStyles from '../../onboarding-steps.module.css';
 import styles from './interests-info.module.css';
 
 import {useUserStorage} from '~pages/Onboarding/hooks/useUserStorage';
+import {useInterests} from '~shared/api';
 
 const {Title, Text} = Typography;
 
@@ -18,25 +19,8 @@ interface InterestsInfoProps {
 }
 
 interface InterestsInfoFormData {
-  interests: string[];
+  interests: number[];
 }
-
-const INTERESTS_LIST = [
-  'interests.faith',
-  'interests.nature',
-  'interests.literature',
-  'interests.music',
-  'interests.crafts',
-  'interests.cooking',
-  'interests.travel',
-  'interests.sport',
-  'interests.family',
-  'interests.animals',
-  'interests.art',
-  'interests.history',
-  'interests.meditation',
-  'interests.volunteering',
-];
 
 export const InterestsInfo = ({
   onSumbit,
@@ -46,14 +30,15 @@ export const InterestsInfo = ({
   const {t} = useTranslation(['auth', 'common']);
   const form = Form.useFormInstance<InterestsInfoFormData>();
   const {user, updateUser} = useUserStorage();
-  const [selectedInterests, setSelectedInterests] = useState<string[]>(
+  const {data: interestsMap = {}} = useInterests();
+  const [selectedInterests, setSelectedInterests] = useState<number[]>(
     user.interests ?? []
   );
 
-  const handleInterestClick = (interest: string) => {
-    const newSelected = selectedInterests.includes(interest)
-      ? selectedInterests.filter((i) => i !== interest)
-      : [...selectedInterests, interest];
+  const handleInterestClick = (id: number) => {
+    const newSelected = selectedInterests.includes(id)
+      ? selectedInterests.filter((i) => i !== id)
+      : [...selectedInterests, id];
 
     setSelectedInterests(newSelected);
     form.setFieldsValue({interests: newSelected});
@@ -94,16 +79,15 @@ export const InterestsInfo = ({
           styles.interestsContainer
         )}
       >
-        {INTERESTS_LIST.map((interest) => (
+        {Object.entries(interestsMap).map(([id, name]) => (
           <Tag
-            key={interest}
+            key={id}
             className={classNames(styles.interestTag, {
-              [styles.selected]: selectedInterests?.includes(interest),
+              [styles.selected]: selectedInterests.includes(Number(id)),
             })}
-            onClick={() => handleInterestClick(interest)}
+            onClick={() => handleInterestClick(Number(id))}
           >
-            {/* @ts-expect-error - динамический ключ i18n */}
-            {t(`auth.interests.${interest}`)}
+            {name}
           </Tag>
         ))}
       </div>
@@ -127,7 +111,7 @@ export const InterestsInfo = ({
           variant='filled'
           onClick={handleSubmit}
           loading={loading}
-          disabled={selectedInterests?.length === 0}
+          disabled={selectedInterests.length === 0}
         >
           {t('common:continue')}
         </Button>

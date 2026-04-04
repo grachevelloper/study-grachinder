@@ -34,12 +34,16 @@ export const useInterests = () =>
         queryKey: SHARED_KEYS.interests,
         queryFn: sharedApi.getInterests,
         staleTime: Infinity,
+        select: (data) =>
+            Object.fromEntries(data.map((i) => [i.id, i.name])) as Record<number, string>,
     });
 
 export const useCities = (search?: string) =>
     useQuery({
         queryKey: SHARED_KEYS.cities(search),
         queryFn: () => sharedApi.getCities(search),
+        select: (data) =>
+            Object.fromEntries(data.map((c) => [c.id, c.name])) as Record<number, string>,
     });
 
 export {queryClient};

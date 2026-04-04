@@ -1,6 +1,5 @@
 import {
   CalendarOutlined,
-  EnvironmentOutlined,
   TeamOutlined,
 } from '@ant-design/icons';
 import {Typography, Input, Button, Select, Form, DatePicker, Flex} from 'antd';
@@ -14,6 +13,8 @@ import baseStyles from '../../onboarding-steps.module.css';
 import styles from './baptism-info.module.css';
 
 import type {UserFormData} from '~shared/typings/user';
+
+import {useCities} from '~shared/api';
 
 const {Title, Text} = Typography;
 const {Option} = Select;
@@ -29,6 +30,7 @@ type BaptismInfoFormData = Pick<UserFormData, 'baptism_date'> & {};
 export const BaptismInfo = ({onSumbit, onBack, loading}: BaptismInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
   const form = Form.useFormInstance<BaptismInfoFormData>();
+  const {data: citiesMap = {}} = useCities();
 
   const handleSubmit = async () => {
     try {
@@ -129,21 +131,25 @@ export const BaptismInfo = ({onSumbit, onBack, loading}: BaptismInfoProps) => {
 
       <div className={classNames(baseStyles.fadeItem, baseStyles.delay4)}>
         <Form.Item
-          name='city'
+          name='city_id'
           label={
             <Text strong>
               {t('auth.baptism_info.city_label')}
               <Text type='secondary'> ({t('common:optional')})</Text>
             </Text>
           }
-          rules={[{max: 100, message: t('auth.baptism_info.city_max_length')}]}
           className={styles.formItem}
           layout='vertical'
         >
-          <Input
+          <Select
             size='large'
             placeholder={t('auth.baptism_info.city_placeholder')}
-            prefix={<EnvironmentOutlined />}
+            showSearch
+            optionFilterProp='label'
+            options={Object.entries(citiesMap).map(([id, name]) => ({
+              value: Number(id),
+              label: name,
+            }))}
           />
         </Form.Item>
       </div>

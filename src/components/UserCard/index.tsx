@@ -6,6 +6,7 @@ import {
   Typography,
   theme,
 } from 'antd';
+import {useRef} from 'react';
 
 import styles from './user-card.module.css';
 
@@ -14,20 +15,23 @@ import type {User} from '~shared/typings/user';
 const {Title, Paragraph} = Typography;
 
 interface UserCardProps {
-  user: Pick<User, 'name' | 'interests' | 'bio' | 'avatar_urls'>;
-  formatInterest?: (interest: string) => string;
+  user: User;
+  isActive?: boolean;
 }
 
-export const UserCard = ({user, formatInterest}: UserCardProps) => {
+export const UserCard = ({user, isActive = false}: UserCardProps) => {
   const {
     token: {colorTextLightSolid},
   } = theme.useToken();
+
+  const carouselRef = useRef<any>(null);
 
   return (
     <Flex justify='center' align='center' className={styles.card}>
       <div className={styles.carouselWrapper}>
         <AntCarousel
-          autoplay={{dotDuration: true}}
+          ref={carouselRef}
+          autoplay={isActive ? {dotDuration: true} : false}
           dotPlacement='bottom'
           autoplaySpeed={9000}
           draggable
@@ -53,15 +57,18 @@ export const UserCard = ({user, formatInterest}: UserCardProps) => {
       <Flex vertical gap='16px' className={styles.info}>
         <Title
           level={2}
-          style={{color: colorTextLightSolid, marginBottom: '8px'}}
+          style={{
+            color: colorTextLightSolid,
+            marginBottom: '8px',
+            textWrap: 'auto',
+            maxWidth: '100%',
+          }}
         >
           {user.name}
         </Title>
         <Flex gap='8px' wrap>
-          {user.interests?.map((interest) => (
-            <Tag key={interest}>
-              {formatInterest ? formatInterest(interest) : interest}
-            </Tag>
+          {user.interest_ids?.map((interest) => (
+            <Tag key={interest}>{interest}</Tag>
           ))}
         </Flex>
         {user.bio && (

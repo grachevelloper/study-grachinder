@@ -9,21 +9,15 @@ import {useTranslation} from 'react-i18next';
 
 import styles from './sider-user-info.module.css';
 
+import type {User} from '~shared/typings/user';
+
 const {Title, Text} = Typography;
 
-interface UserCardProps {
-  user: {
-    name: string;
-    age?: number;
-    city?: string;
-    gender?: string;
-    children_count?: number;
-    about?: string;
-    interests?: string[];
-  };
-}
+type SiderUserInfoProps = {
+  user: User;
+};
 
-const SiderUserInfo = ({user}: UserCardProps) => {
+const SiderUserInfo = ({user}: SiderUserInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
 
   return (
@@ -39,7 +33,7 @@ const SiderUserInfo = ({user}: UserCardProps) => {
           </Title>
           <Text className={styles.city}>
             <EnvironmentOutlined />{' '}
-            {t('auth.preview.city_format', {city: user.city})}
+            {t('auth.preview.city_format', {city: user.city_id})}
           </Text>
         </div>
       </Flex>
@@ -49,7 +43,6 @@ const SiderUserInfo = ({user}: UserCardProps) => {
           <CalendarOutlined /> {t('auth.preview.age_format', {age: user.age})}
         </Text>
         <Text className={styles.infoItem}>
-          {/* @ts-expect-error - динамический ключ i18n */}
           <UserOutlined /> {t(`auth.main_info.gender_${user.gender}`)}
         </Text>
         {user.children_count !== undefined && (
@@ -67,7 +60,7 @@ const SiderUserInfo = ({user}: UserCardProps) => {
           {t('auth.preview.about_label')}
         </Title>
         <Text className={styles.about}>
-          {user.about || t('auth.preview.about_placeholder')}
+          {user.bio || t('auth.preview.about_placeholder')}
         </Text>
       </div>
 
@@ -76,7 +69,7 @@ const SiderUserInfo = ({user}: UserCardProps) => {
           {t('auth.preview.interests_label')}
         </Title>
         <Flex wrap='wrap' gap={8} className={styles.interests}>
-          {user.interests?.map((interest: string) => (
+          {user.interest_ids?.map((interest: number) => (
             <Tag key={interest} className={styles.interestTag}>
               {/* @ts-expect-error - динамический ключ i18n */}
               {t(`auth.interests.${interest}`)}
