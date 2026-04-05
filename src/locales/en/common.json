@@ -21,5 +21,9 @@
 
   "error.auth.title": "Sign in failed",
   "error.auth.description": "Could not complete the operation. Please try again.",
-  "error.auth.retry": "Try again"
+  "error.auth.retry": "Try again",
+
+  "not_found.title": "Page not found",
+  "not_found.description": "It may have been deleted or you followed an incorrect link.",
+  "not_found.back": "Go home"
 }

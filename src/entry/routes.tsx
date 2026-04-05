@@ -8,6 +8,7 @@ const Carousel = lazy(() => import('~pages/Carousel'));
 const Onboarding = lazy(() => import('~pages/Onboarding'));
 const Profile = lazy(() => import('~pages/Profile'));
 const SignIn = lazy(() => import('~pages/SignIn'));
+const NotFound = lazy(() => import('~pages/NotFound'));
 
 const AppRoutes = () => {
   return (
@@ -22,6 +23,7 @@ const AppRoutes = () => {
             <Route path='/' element={<Carousel />} />
             <Route path='/profile' element={<Profile />} />
           </Route>
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

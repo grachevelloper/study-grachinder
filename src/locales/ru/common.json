@@ -21,5 +21,9 @@
 
   "error.auth.title": "Ошибка при входе",
   "error.auth.description": "Не удалось выполнить операцию. Попробуйте снова.",
-  "error.auth.retry": "Попробовать снова"
+  "error.auth.retry": "Попробовать снова",
+
+  "not_found.title": "Страница не найдена",
+  "not_found.description": "Возможно, она была удалена или вы перешли по неверной ссылке.",
+  "not_found.back": "На главную"
 }
