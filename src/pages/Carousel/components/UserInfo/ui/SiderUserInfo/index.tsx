@@ -5,13 +5,13 @@ import {
   HeartOutlined,
 } from '@ant-design/icons';
 import {Typography, Flex, Divider} from 'antd';
-
-import {InterestTag} from '~components/InterestTag';
 import {useTranslation} from 'react-i18next';
 
 import styles from './sider-user-info.module.css';
 
 import type {User} from '~shared/typings/user';
+
+import {InterestTag} from '~components/InterestTag';
 
 const {Title, Text} = Typography;
 

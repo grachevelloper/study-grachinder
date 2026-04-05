@@ -1,6 +1,4 @@
 import {Flex, message, Typography} from 'antd';
-
-import {InterestTag} from '~components/InterestTag';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -10,6 +8,7 @@ import {SectionHeader} from '../SectionHeader';
 
 import type {User} from '~shared/typings/user';
 
+import {InterestTag} from '~components/InterestTag';
 import {useUpdateInterests} from '~pages/Onboarding/api';
 
 const {Text} = Typography;

@@ -3,12 +3,12 @@ import classNames from 'classnames';
 import {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
-import {InterestTag} from '~components/InterestTag';
 
 import baseStyles from '../../onboarding-steps.module.css';
 
 import styles from './interests-info.module.css';
 
+import {InterestTag} from '~components/InterestTag';
 import {useUserStorage} from '~pages/Onboarding/hooks/useUserStorage';
 import {useInterests} from '~shared/api';
 

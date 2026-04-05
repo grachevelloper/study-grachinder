@@ -2,8 +2,8 @@ import { useState, useEffect, useCallback } from 'react';
 
 import type { User } from '~shared/typings/user';
 
-import { UserEmitter, USER_EVENT } from '~shared/events/onboarding';
 import { ONBOARDING_USER_KEY } from '~shared/constants';
+import { UserEmitter, USER_EVENT } from '~shared/events/onboarding';
 
 const ONBOARDNING_USER = ONBOARDING_USER_KEY;
 

@@ -7,7 +7,6 @@ import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import styles from './base-layout.module.css';
 
 import layoutImg from '~assets/layout.png';
-
 import {getToken} from '~shared/config/api';
 
 export const BaseLayout = () => {

@@ -5,13 +5,13 @@ import {
   Typography,
   theme,
 } from 'antd';
-
-import {InterestTag} from '~components/InterestTag';
 import {useRef} from 'react';
 
 import styles from './user-card.module.css';
 
 import type {User} from '~shared/typings/user';
+
+import {InterestTag} from '~components/InterestTag';
 
 const {Title, Paragraph} = Typography;
 
