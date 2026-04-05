@@ -214,6 +214,7 @@ export const ProfileHero = ({
             )}
             {user?.gender && (
               <Tag icon={<UserOutlined />}>
+                {/* @ts-expect-error - динамический ключ i18n */}
                 {t(`auth.main_info.gender_${user.gender}`)}
               </Tag>
             )}

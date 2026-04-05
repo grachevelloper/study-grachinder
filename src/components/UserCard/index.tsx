@@ -2,10 +2,11 @@ import {
   Carousel as AntCarousel,
   Flex,
   Image,
-  Tag,
   Typography,
   theme,
 } from 'antd';
+
+import {InterestTag} from '~components/InterestTag';
 import {useRef} from 'react';
 
 import styles from './user-card.module.css';
@@ -67,8 +68,8 @@ export const UserCard = ({user, isActive = false}: UserCardProps) => {
           {user.name}
         </Title>
         <Flex gap='8px' wrap>
-          {user.interest_ids?.map((interest) => (
-            <Tag key={interest}>{interest}</Tag>
+          {user.interests?.map((name) => (
+            <InterestTag key={name} name={name} />
           ))}
         </Flex>
         {user.bio && (

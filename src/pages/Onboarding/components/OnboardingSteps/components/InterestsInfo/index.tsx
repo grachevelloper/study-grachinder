@@ -1,7 +1,9 @@
-import {Typography, Button, Form, Flex, Tag} from 'antd';
+import {Typography, Button, Form, Flex} from 'antd';
 import classNames from 'classnames';
 import {Fragment, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+
+import {InterestTag} from '~components/InterestTag';
 
 import baseStyles from '../../onboarding-steps.module.css';
 
@@ -80,15 +82,14 @@ export const InterestsInfo = ({
         )}
       >
         {Object.entries(interestsMap).map(([id, name]) => (
-          <Tag
+          <InterestTag
             key={id}
+            name={name}
             className={classNames(styles.interestTag, {
               [styles.selected]: selectedInterests.includes(Number(id)),
             })}
             onClick={() => handleInterestClick(Number(id))}
-          >
-            {name}
-          </Tag>
+          />
         ))}
       </div>
 

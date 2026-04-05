@@ -1,6 +1,12 @@
 import {useMutation} from '@tanstack/react-query';
 
 import {query, queryClient, saveToken, removeToken} from '~shared/config/api';
+import {ONBOARDING_STEP_COUNT_KEY, ONBOARDING_USER_KEY} from '~shared/constants';
+
+const clearOnboardingStorage = () => {
+    localStorage.removeItem(ONBOARDING_USER_KEY);
+    localStorage.removeItem(ONBOARDING_STEP_COUNT_KEY);
+};
 
 interface AuthPayload {
     email: string;
@@ -25,13 +31,19 @@ export const signInApi = {
 export const useSignIn = () =>
     useMutation({
         mutationFn: signInApi.signIn,
-        onSuccess: ({jwt}) => saveToken(jwt),
+        onSuccess: ({jwt}) => {
+            clearOnboardingStorage();
+            saveToken(jwt);
+        },
     });
 
 export const useRegister = () =>
     useMutation({
         mutationFn: signInApi.register,
-        onSuccess: ({jwt}) => saveToken(jwt),
+        onSuccess: ({jwt}) => {
+            clearOnboardingStorage();
+            saveToken(jwt);
+        },
     });
 
 export const useSignOut = () =>

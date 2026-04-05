@@ -3,8 +3,9 @@ import { useState, useEffect, useCallback } from 'react';
 import type { User } from '~shared/typings/user';
 
 import { UserEmitter, USER_EVENT } from '~shared/events/onboarding';
+import { ONBOARDING_USER_KEY } from '~shared/constants';
 
-const ONBOARDNING_USER = 'onboarding_user';
+const ONBOARDNING_USER = ONBOARDING_USER_KEY;
 
 export const useUserStorage = () => {
     const [user, setUser] = useState<User>(() => {

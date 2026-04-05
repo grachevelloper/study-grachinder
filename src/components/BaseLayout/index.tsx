@@ -2,15 +2,21 @@ import {ArrowLeftOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Col, Flex, Image, Row, theme} from 'antd';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Outlet, useLocation, useNavigate} from 'react-router-dom';
+import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
 
 import styles from './base-layout.module.css';
 
 import layoutImg from '~assets/layout.png';
 
+import {getToken} from '~shared/config/api';
+
 export const BaseLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  if (!getToken()) {
+    return <Navigate to='/auth/signin' replace />;
+  }
   const {i18n} = useTranslation();
   const {
     token: {colorBgBase, colorPrimary},

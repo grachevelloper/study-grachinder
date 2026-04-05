@@ -1,4 +1,6 @@
-import {Flex, message, Tag, Typography} from 'antd';
+import {Flex, message, Typography} from 'antd';
+
+import {InterestTag} from '~components/InterestTag';
 import classNames from 'classnames';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -68,23 +70,23 @@ export const ProfileInterests = ({
             const numId = Number(id);
             const isSelected = selected.includes(numId);
             return (
-              <Tag
+              <InterestTag
                 key={id}
+                name={name}
                 className={classNames(styles.interestTag, {
                   [styles.interestSelected]: isSelected,
                 })}
-                color={isSelected ? 'processing' : undefined}
                 onClick={() => toggle(numId)}
-              >
-                {name}
-              </Tag>
+              />
             );
           })
         ) : user?.interest_ids?.length ? (
           user.interest_ids.map((id) => (
-            <Tag key={id} className={styles.interestTag}>
-              {interestsMap[id] ?? id}
-            </Tag>
+            <InterestTag
+              key={id}
+              name={String(interestsMap[id] ?? id)}
+              className={styles.interestTag}
+            />
           ))
         ) : (
           <Text className={styles.empty}>{notSpecified}</Text>

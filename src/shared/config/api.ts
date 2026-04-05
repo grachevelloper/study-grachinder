@@ -28,7 +28,7 @@ apiAxios.interceptors.response.use(
     (response: AxiosResponse) => response.data,
     async (error: any) => {
         const originalRequest = error.config;
-
+        console.log(error)
         if (originalRequest.url?.includes('/user/refresh')) {
             if (error.response?.status === 401) {
                 console.error('Refresh token expired');

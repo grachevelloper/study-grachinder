@@ -41,15 +41,6 @@ const SignInPage = () => {
     return 'small';
   };
 
-  const getContainerWidth = () => {
-    if (screens.xxl) return '600px';
-    if (screens.xl) return '480px';
-    if (screens.lg) return '360px';
-    if (screens.md) return '340px';
-    if (screens.sm) return '320px';
-    return '300px';
-  };
-
   const getGap = () => {
     if (screens.md) return '18px';
     return '12px';
@@ -84,7 +75,7 @@ const SignInPage = () => {
         gap={screens.md ? '16px' : '12px'}
         style={{
           width: '100%',
-          maxWidth: getContainerWidth(),
+          maxWidth: '600px',
         }}
       >
         <Input
@@ -92,7 +83,9 @@ const SignInPage = () => {
           size={getInputSize()}
           placeholder={t('name.placeholder')}
           value={form.email}
-          onChange={(e) => setForm((prev) => ({...prev, email: e.target.value}))}
+          onChange={(e) =>
+            setForm((prev) => ({...prev, email: e.target.value}))
+          }
           style={{
             fontSize: screens.md ? '16px' : '14px',
           }}
@@ -104,7 +97,9 @@ const SignInPage = () => {
           type='password'
           placeholder={t('password.placeholder')}
           value={form.password}
-          onChange={(e) => setForm((prev) => ({...prev, password: e.target.value}))}
+          onChange={(e) =>
+            setForm((prev) => ({...prev, password: e.target.value}))
+          }
           onPressEnter={handleSubmit}
           style={{
             fontSize: screens.md ? '16px' : '14px',

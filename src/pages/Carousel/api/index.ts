@@ -1,18 +1,35 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import type { UserResponse } from '~shared/typings/user';
+import type { User } from '~shared/typings/user';
 
 import { query, queryClient } from '~shared/config/api';
 
+const mapFeedUser = (raw: any): User => ({
+    id: raw.id,
+    name: raw.username ?? raw.name,
+    age: raw.age,
+    gender: raw.gender?.toLowerCase() ?? raw.gender,
+    bio: raw.about ?? raw.bio,
+    avatar_urls: raw.photos ?? raw.avatar_urls ?? [],
+    children_count: raw.childrenCount ?? raw.children_count ?? 0,
+    city: raw.city,
+    city_id: raw.city_id,
+    telegram: raw.telegram,
+    interests: raw.interests,
+    interest_ids: raw.interest_ids,
+    slavic_zodiac: raw.slavicZodiac,
+    marital_status: raw.maritalStatus ?? raw.marital_status,
+});
+
 export const carouselApi = {
     getFeed: () =>
-        query.get<UserResponse[]>('/feed'),
+        query.get<any[]>('/user').then((data) => data.map(mapFeedUser)),
 
     likeUser: (userId: number) =>
-        query.post(`/feed/${userId}/like`),
+        query.post(`/user/${userId}/like`),
 
     passUser: (userId: number) =>
-        query.post(`/feed/${userId}/pass`),
+        query.post(`/user/${userId}/pass`),
 };
 
 export const CAROUSEL_KEYS = {

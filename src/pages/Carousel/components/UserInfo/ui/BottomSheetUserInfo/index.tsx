@@ -5,7 +5,9 @@ import {
   HeartOutlined,
   CloseOutlined,
 } from '@ant-design/icons';
-import {Drawer, Typography, Flex, Tag, Divider, Button} from 'antd';
+import {Drawer, Typography, Flex, Divider, Button} from 'antd';
+
+import {InterestTag} from '~components/InterestTag';
 import {useTranslation} from 'react-i18next';
 
 import styles from './bottom-sheet-user-info.module.css';
@@ -40,7 +42,7 @@ const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
             </Title>
             <Text className={styles.city}>
               <EnvironmentOutlined />{' '}
-              {t('auth.preview.city_format', {city: user.city_id})}
+              {user.city ?? t('auth.preview.city_format', {city: user.city_id})}
             </Text>
           </div>
           <CloseOutlined
@@ -89,11 +91,8 @@ const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
             {t('auth.preview.interests_label')}
           </Title>
           <Flex wrap='wrap' gap={8} className={styles.interests}>
-            {user.interest_ids?.map((interest: number) => (
-              <Tag key={interest} className={styles.interestTag}>
-                {/* @ts-expect-error - динамический ключ i18n */}
-                {t(`auth.interests.${interest}`)}
-              </Tag>
+            {user.interests?.map((name) => (
+              <InterestTag key={name} name={name} className={styles.interestTag} />
             ))}
           </Flex>
         </div>
