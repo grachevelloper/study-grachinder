@@ -1,5 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
 import axios, { type AxiosInstance, type AxiosRequestConfig, type AxiosResponse } from 'axios';
+
 import { JWT_TOKEN_KEY } from '~shared/constants';
 
 const apURL = import.meta.env.VITE_API_URL
