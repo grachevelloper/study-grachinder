@@ -3,7 +3,7 @@ import {
   CalendarOutlined,
   CameraOutlined,
 } from '@ant-design/icons';
-import {Typography, Input, Button, Select, Upload, Form, Image} from 'antd';
+import {Typography, Input, Button, Select, Upload, Form} from 'antd';
 import classNames from 'classnames';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -127,7 +127,7 @@ export const MainInfo = ({onSumbit, loading, form}: MainInfoProps) => {
             {required: true, message: t('auth.main_info.photo_required')},
           ]}
           className={styles.formItem}
-          getValueFromEvent={(e) => e?.file}
+          getValueFromEvent={(e) => e?.fileList ?? e}
         >
           <Upload
             listType='picture-card'
@@ -137,20 +137,10 @@ export const MainInfo = ({onSumbit, loading, form}: MainInfoProps) => {
             accept='image/*'
             multiple
           >
-            {photoValue?.file ? (
-              <Image
-                src={URL.createObjectURL(photoValue.file)}
-                alt='avatar'
-                width='100%'
-                height='100%'
-                style={{objectFit: 'cover'}}
-              />
-            ) : (
-              <div>
-                <CameraOutlined />
-                <div style={{marginTop: 8}}>{t('auth.main_info.upload')}</div>
-              </div>
-            )}
+            <div>
+              <CameraOutlined />
+              <div style={{marginTop: 8}}>{t('auth.main_info.upload')}</div>
+            </div>
           </Upload>
         </Form.Item>
       </div>

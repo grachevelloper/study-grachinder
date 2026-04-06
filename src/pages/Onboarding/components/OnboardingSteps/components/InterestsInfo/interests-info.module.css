@@ -33,19 +33,19 @@
 }
 
 .interestTag:hover {
-  background: #e6f7ff;
-  border-color: #1890ff;
-  color: #1890ff;
+  background: #f5ecec;
+  border-color: #8B2C2C;
+  color: #8B2C2C;
 }
 
 .selected {
-  background: #1890ff;
-  border-color: #1890ff;
+  background: #8B2C2C;
+  border-color: #8B2C2C;
   color: white;
 }
 
 .selected:hover {
-  background: #40a9ff;
-  border-color: #40a9ff;
+  background: #B84C4C;
+  border-color: #B84C4C;
   color: white;
 }

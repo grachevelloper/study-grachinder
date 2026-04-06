@@ -11,7 +11,7 @@ export const Preview = () => {
   const {user} = useUserStorage();
   const {t} = useTranslation('common');
 
-  const hasBasicInfo = user?.name || (user?.interest_ids?.length ?? 0) > 0;
+  const hasBasicInfo = user?.name || (user?.interest_ids?.length ?? 0) > 0 || (user?.avatar_urls?.length ?? 0) > 0;
 
   if (!hasBasicInfo) {
     return (

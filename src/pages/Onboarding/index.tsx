@@ -115,7 +115,7 @@ const OnnboardingPage = () => {
     >
       {contextHolder}
       <OnboadringSteps />
-      {stepCount !== 0 && isDesktop && <Preview />}
+      {stepCount && isDesktop && <Preview />}
       {renderFloatButtonToSignIn}
     </Flex>
   );

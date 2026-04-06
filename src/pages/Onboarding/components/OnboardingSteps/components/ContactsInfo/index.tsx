@@ -3,7 +3,6 @@ import {Typography, Button, Form, Flex, Input} from 'antd';
 import classNames from 'classnames';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
-import {useNavigate} from 'react-router-dom';
 
 import baseStyles from '../../onboarding-steps.module.css';
 
@@ -25,16 +24,9 @@ export const ContactsInfo = ({
   loading,
 }: ContactsInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
-  const navigate = useNavigate();
 
-  const handleSubmit = async () => {
-    try {
-      onSumbit();
-
-      navigate('/');
-    } catch (error) {
-      console.error('Validation failed:', error);
-    }
+  const handleSubmit = () => {
+    onSumbit();
   };
 
   return (

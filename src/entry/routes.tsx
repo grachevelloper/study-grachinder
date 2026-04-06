@@ -12,7 +12,7 @@ const NotFound = lazy(() => import('~pages/NotFound'));
 
 const AppRoutes = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/study-grachinder'>
       <Suspense>
         <Routes>
           <Route element={<AuthLayout />} path='/auth'>

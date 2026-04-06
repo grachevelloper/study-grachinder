@@ -19,6 +19,8 @@ const SignInPage = () => {
   const [form, setForm] = useState({email: '', password: ''});
   const signIn = useSignIn();
 
+  const isDesktop = window.innerWidth > 1200;
+
   const handleToRegister = () => {
     navigate('/auth/signup', {
       state: {
@@ -56,6 +58,7 @@ const SignInPage = () => {
       style={{
         margin: '0 auto',
         padding: screens.md ? '20px' : '16px',
+        right: isDesktop ? '5%' : '0',
       }}
     >
       <Flex

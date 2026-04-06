@@ -91,7 +91,7 @@ const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
             {t('auth.preview.interests_label')}
           </Title>
           <Flex wrap='wrap' gap={8} className={styles.interests}>
-            {user.interests?.map((name) => (
+            {[...new Set(user.interests)]?.map((name) => (
               <InterestTag key={name} name={name} className={styles.interestTag} />
             ))}
           </Flex>

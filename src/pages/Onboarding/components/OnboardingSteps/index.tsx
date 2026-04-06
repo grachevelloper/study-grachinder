@@ -1,6 +1,8 @@
 import {Flex, Form} from 'antd';
 import {useCallback, useEffect} from 'react';
+import {useNavigate} from 'react-router-dom';
 
+import {useFinishOnboarding} from '../../api';
 import {useUserStorage} from '../../hooks/useUserStorage';
 
 import {AboutInfo} from './components/AboutInfo';
@@ -12,7 +14,7 @@ import {Register} from './components/Register';
 
 import styles from './onboarding-steps.module.css';
 
-import {ONBOARDING_STEP_COUNT_KEY} from '~shared/constants';
+import {ONBOARDING_STEP_COUNT_KEY, ONBOARDING_USER_KEY} from '~shared/constants';
 import {AUTH_EVENT, AuthEmitter} from '~shared/events/auth';
 import {useAuthStepsListen} from '~shared/hooks/useAuthStepsListen';
 import {useLocalStorage} from '~shared/hooks/useLocalStorage';
@@ -29,8 +31,35 @@ export const OnboadringSteps = () => {
     form.setFieldsValue(user);
   }, []);
 
-  const handleValuesChange = (_: unknown, allValues: unknown) => {
-    updateUser(allValues as Parameters<typeof updateUser>[0]);
+  const navigate = useNavigate();
+  const {mutate: finishOnboarding, isPending: isFinishing} = useFinishOnboarding();
+
+  const fileToDataUrl = (file: File): Promise<string> =>
+    new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => resolve(e.target?.result as string);
+      reader.readAsDataURL(file);
+    });
+
+  const handleValuesChange = async (changedValues: unknown, allValues: unknown) => {
+    const changed = changedValues as Record<string, unknown>;
+    const values = allValues as Record<string, unknown>;
+    const {photo: allPhoto, ...rest} = values;
+
+    const cleanRest = Object.fromEntries(
+      Object.entries(rest).filter(([, v]) => v !== undefined)
+    );
+
+    if ('photo' in changed) {
+      const fileList = Array.isArray(allPhoto) ? allPhoto : allPhoto ? [allPhoto] : [];
+      const files = fileList
+        .filter((f: any) => f?.originFileObj)
+        .map((f: any) => f.originFileObj as File);
+      const urls = await Promise.all(files.map(fileToDataUrl));
+      updateUser({...cleanRest, avatar_urls: urls} as Parameters<typeof updateUser>[0]);
+    } else {
+      updateUser(cleanRest as Parameters<typeof updateUser>[0]);
+    }
   };
 
   const handleNextStep = () => {
@@ -38,8 +67,13 @@ export const OnboadringSteps = () => {
       setStep((prev) => prev + 1);
       AuthEmitter.emit(AUTH_EVENT, stepCount + 1);
     } else {
-      setStep(0);
-      AuthEmitter.emit(AUTH_EVENT, 0);
+      finishOnboarding(undefined, {
+        onSuccess: () => {
+          localStorage.removeItem(ONBOARDING_USER_KEY);
+          localStorage.removeItem(ONBOARDING_STEP_COUNT_KEY);
+          navigate('/');
+        },
+      });
     }
   };
 
@@ -98,7 +132,7 @@ export const OnboadringSteps = () => {
           <ContactsInfo
             onBack={handlePrevStep}
             onSumbit={handleNextStep}
-            loading={false}
+            loading={isFinishing}
           />
         );
       }

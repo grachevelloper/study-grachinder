@@ -68,7 +68,7 @@ export const UserCard = ({user, isActive = false}: UserCardProps) => {
           {user.name}
         </Title>
         <Flex gap='8px' wrap>
-          {user.interests?.map((name) => (
+          {[...new Set(user.interests)]?.map((name) => (
             <InterestTag key={name} name={name} />
           ))}
         </Flex>
