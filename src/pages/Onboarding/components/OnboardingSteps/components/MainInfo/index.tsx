@@ -39,7 +39,6 @@ export const MainInfo = ({onSumbit, loading, form}: MainInfoProps) => {
     }
   };
 
-  const photoValue = Form.useWatch('photo', form);
 
   return (
     <Fragment>
