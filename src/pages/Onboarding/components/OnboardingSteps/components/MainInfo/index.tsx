@@ -4,8 +4,8 @@ import {
   CameraOutlined,
 } from '@ant-design/icons';
 import {Typography, Input, Button, Select, Upload, Form, DatePicker} from 'antd';
-import dayjs from 'dayjs';
 import classNames from 'classnames';
+import dayjs from 'dayjs';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
 

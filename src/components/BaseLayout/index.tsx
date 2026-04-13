@@ -7,8 +7,8 @@ import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import styles from './base-layout.module.css';
 
 import layoutImg from '~assets/layout.png';
-import {getToken, removeToken} from '~shared/config/api';
 import {queryClient} from '~shared/api';
+import {getToken, removeToken} from '~shared/config/api';
 
 export const BaseLayout = () => {
   const navigate = useNavigate();

@@ -1,4 +1,5 @@
 import {Tag, Tooltip} from 'antd';
+
 import type React from 'react';
 
 interface InterestTagProps {
