@@ -17,17 +17,22 @@ export const useUserStorage = () => {
     const updateUser = useCallback((updates: Partial<User>) => {
         setUser(prev => {
             const newUser = { ...prev, ...updates };
-            localStorage.setItem(ONBOARDNING_USER, JSON.stringify(newUser));
-            UserEmitter.emit(USER_EVENT.UPDATE, newUser);
+            // avatar_urls can be blob URLs or large data URLs — keep in memory only
+            const { avatar_urls: _skip, ...storableUser } = newUser as any;
+            try {
+                localStorage.setItem(ONBOARDNING_USER, JSON.stringify(storableUser));
+            } catch {
+                // quota exceeded — keep in memory only
+            }
+            // defer emit to avoid "setState during render" React warning
+            queueMicrotask(() => UserEmitter.emit(USER_EVENT.UPDATE, newUser));
             return newUser;
         });
     }, []);
 
-
     useEffect(() => {
         const handleUpdate = (updatedUser: User) => {
             setUser(updatedUser);
-            localStorage.setItem(ONBOARDNING_USER, JSON.stringify(updatedUser));
         };
 
         UserEmitter.on(USER_EVENT.UPDATE, handleUpdate);

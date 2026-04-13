@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import type { Match } from '~shared/typings/match';
 import type { User } from '~shared/typings/user';
 
 import { query, queryClient } from '~shared/config/api';
@@ -15,6 +16,8 @@ const mapFeedUser = (raw: any): User => ({
     city: raw.city,
     city_id: raw.city_id,
     telegram: raw.telegram,
+    phone: raw.phone,
+    email: raw.email,
     interests: raw.interests,
     interest_ids: raw.interest_ids,
     slavic_zodiac: raw.slavicZodiac,
@@ -26,10 +29,10 @@ export const carouselApi = {
         query.get<any[]>('/user').then((data) => data.map(mapFeedUser)),
 
     likeUser: (userId: number) =>
-        query.post(`/user/${userId}/like`),
+        query.post<Match>(`/match/match/${userId}`),
 
     passUser: (userId: number) =>
-        query.post(`/user/${userId}/pass`),
+        query.post<void>(`/match/dismatch/${userId}`),
 };
 
 export const CAROUSEL_KEYS = {

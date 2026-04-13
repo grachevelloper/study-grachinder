@@ -4,7 +4,7 @@ import {
   EnvironmentOutlined,
   HeartOutlined,
 } from '@ant-design/icons';
-import {Typography, Flex, Divider} from 'antd';
+import {Typography, Flex, Divider, Button} from 'antd';
 import {useTranslation} from 'react-i18next';
 
 import styles from './sider-user-info.module.css';
@@ -17,9 +17,11 @@ const {Title, Text} = Typography;
 
 type SiderUserInfoProps = {
   user: User;
+  onLike?: () => void;
+  onDislike?: () => void;
 };
 
-const SiderUserInfo = ({user}: SiderUserInfoProps) => {
+const SiderUserInfo = ({user, onLike, onDislike}: SiderUserInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
 
   return (
@@ -77,6 +79,14 @@ const SiderUserInfo = ({user}: SiderUserInfoProps) => {
           ))}
         </Flex>
       </div>
+      <Flex gap={8} style={{marginTop: 'auto', paddingTop: 16}}>
+        <Button size='large' block onClick={onDislike}>
+          {t('common:dislike')}
+        </Button>
+        <Button type='primary' size='large' variant='filled' color='primary' block onClick={onLike}>
+          {t('common:like')}
+        </Button>
+      </Flex>
     </Flex>
   );
 };

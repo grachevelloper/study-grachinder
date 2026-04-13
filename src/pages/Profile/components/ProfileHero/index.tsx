@@ -99,16 +99,22 @@ export const ProfileHero = ({
     .toUpperCase();
 
   return (
+    <div className={styles.heroOuter}>
+      <div
+        className={styles.heroCover}
+        style={{background: `linear-gradient(135deg, ${colorPrimary}cc 0%, ${colorPrimary}66 100%)`}}
+      />
     <div
       className={styles.hero}
       style={{backgroundColor: colorBgContainer, borderColor: colorBorder}}
     >
       <div
         className={styles.avatarWrapper}
+        style={{boxShadow: `0 0 0 4px ${colorBgContainer}`}}
         onClick={() => avatarInputRef.current?.click()}
       >
         <Avatar
-          size={80}
+          size={96}
           src={user?.avatar_urls?.[0]}
           icon={!user?.avatar_urls?.[0] && <UserOutlined size={16} />}
           style={{
@@ -178,10 +184,17 @@ export const ProfileHero = ({
             </Form.Item>
           </Flex>
           <Flex gap={8} className={styles.inlineActions}>
-            <Button size='small' icon={<CloseOutlined />} onClick={onEditEnd} />
             <Button
               size='small'
-              type='primary'
+              color='default'
+              variant='filled'
+              icon={<CloseOutlined />}
+              onClick={onEditEnd}
+            />
+            <Button
+              size='small'
+              color='primary'
+              variant='filled'
               icon={<CheckOutlined />}
               onClick={handleSave}
               loading={updateMain.isPending}
@@ -195,8 +208,9 @@ export const ProfileHero = ({
               {user?.name}
             </Title>
             <Button
-              type='text'
               size='small'
+              color='primary'
+              variant='filled'
               icon={<EditOutlined />}
               onClick={onEditStart}
             />
@@ -207,20 +221,21 @@ export const ProfileHero = ({
                 {t('auth.preview.age_format', {age: user.age})}
               </Tag>
             )}
-            {user?.city_id && citiesMap[user.city_id] && (
+            {(user?.city || (user?.city_id && citiesMap[user.city_id])) && (
               <Tag icon={<EnvironmentOutlined />}>
-                {citiesMap[user.city_id]}
+                {user.city_id ? citiesMap[user.city_id] ?? user.city : user.city}
               </Tag>
             )}
             {user?.gender && (
               <Tag icon={<UserOutlined />}>
                 {/* @ts-expect-error - динамический ключ i18n */}
-                {t(`auth.main_info.gender_${user.gender}`)}
+                {t(`auth.main_info.gender_${user.gender.toLowerCase()}`)}
               </Tag>
             )}
           </Flex>
         </div>
       )}
+    </div>
     </div>
   );
 };

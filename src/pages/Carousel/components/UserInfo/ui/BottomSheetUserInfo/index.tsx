@@ -20,9 +20,11 @@ interface BottomSheetInfoProps {
   user: User;
   onClose?: () => void;
   open?: boolean;
+  onLike?: () => void;
+  onDislike?: () => void;
 }
 
-const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
+const BottomSheet = ({open, onClose, user, onLike, onDislike}: BottomSheetInfoProps) => {
   const {t} = useTranslation(['auth', 'common']);
   return (
     <Drawer
@@ -97,16 +99,27 @@ const BottomSheet = ({open, onClose, user}: BottomSheetInfoProps) => {
           </Flex>
         </div>
 
-        <Button
-          type='primary'
-          size='large'
-          variant='filled'
-          color='primary'
-          block
-          className={styles.actionButton}
-        >
-          {t('common:like')}
-        </Button>
+        <Flex gap={8}>
+          <Button
+            size='large'
+            block
+            className={styles.actionButton}
+            onClick={onDislike}
+          >
+            {t('common:dislike')}
+          </Button>
+          <Button
+            type='primary'
+            size='large'
+            variant='filled'
+            color='primary'
+            block
+            className={styles.actionButton}
+            onClick={onLike}
+          >
+            {t('common:like')}
+          </Button>
+        </Flex>
       </Flex>
     </Drawer>
   );

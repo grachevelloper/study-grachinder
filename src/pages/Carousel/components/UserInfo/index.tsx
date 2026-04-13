@@ -8,14 +8,16 @@ interface UserCardProps {
   isMobile: boolean;
   open?: boolean;
   onClose?: () => void;
+  onLike?: () => void;
+  onDislike?: () => void;
 }
 
-const userInfo = ({user, open, onClose, isMobile}: UserCardProps) => {
+const userInfo = ({user, open, onClose, isMobile, onLike, onDislike}: UserCardProps) => {
   const Component = isMobile ? UserCardMobile : UserCardDesktop;
 
   return (
     <Suspense fallback={undefined}>
-      <Component user={user} {...(isMobile ? {open, onClose} : {})} />
+      <Component user={user} onLike={onLike} onDislike={onDislike} {...(isMobile ? {open, onClose} : {})} />
     </Suspense>
   );
 };

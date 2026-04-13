@@ -3,7 +3,8 @@ import {
   CalendarOutlined,
   CameraOutlined,
 } from '@ant-design/icons';
-import {Typography, Input, Button, Select, Upload, Form} from 'antd';
+import {Typography, Input, Button, Select, Upload, Form, DatePicker} from 'antd';
+import dayjs from 'dayjs';
 import classNames from 'classnames';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -65,33 +66,43 @@ export const MainInfo = ({onSumbit, loading, form}: MainInfoProps) => {
         </Form.Item>
       </div>
 
-      <div className={classNames(baseStyles.fadeItem, baseStyles.delay2)}>
+      <div className={classNames(baseStyles.fadeItem, baseStyles.delay1)}>
         <Form.Item
-          name='age'
-          label={
-            <Text strong>
-              {t('auth.main_info.age_label')}
-              <Text type='secondary'> ({t('common:optional')})</Text>
-            </Text>
-          }
+          name='last_name'
+          label={<Text strong>{t('auth.main_info.last_name_label')}</Text>}
           rules={[
-            {pattern: /^\d+$/, message: t('auth.main_info.age_invalid')},
-            {
-              type: 'number',
-              transform: Number,
-              min: 18,
-              max: 100,
-              message: t('auth.main_info.age_range'),
-            },
+            {required: true, message: t('auth.main_info.last_name_required')},
+            {min: 2, message: t('auth.main_info.last_name_min_length')},
+            {max: 50, message: t('auth.main_info.last_name_max_length')},
           ]}
           className={styles.formItem}
-          getValueFromEvent={(e) => e.target.value}
         >
           <Input
             size='large'
-            type='number'
-            placeholder={t('auth.main_info.age_placeholder')}
+            placeholder={t('auth.main_info.last_name_placeholder')}
+            prefix={<UserOutlined />}
+          />
+        </Form.Item>
+      </div>
+
+      <div className={classNames(baseStyles.fadeItem, baseStyles.delay2)}>
+        <Form.Item
+          name='birthDate'
+          label={
+            <Text strong>
+              {t('auth.main_info.birth_date_label')}
+              <Text type='secondary'> ({t('common:optional')})</Text>
+            </Text>
+          }
+          className={styles.formItem}
+          getValueProps={(value) => ({value: value ? dayjs(value) : undefined})}
+        >
+          <DatePicker
+            size='large'
+            placeholder={t('auth.main_info.birth_date_placeholder')}
             prefix={<CalendarOutlined />}
+            format='DD.MM.YYYY'
+            style={{width: '100%'}}
           />
         </Form.Item>
       </div>
@@ -113,7 +124,6 @@ export const MainInfo = ({onSumbit, loading, form}: MainInfoProps) => {
             <Option value='female'>
               {t('auth.main_info.gender_female')}
             </Option>
-            <Option value='other'>{t('auth.main_info.gender_other')}</Option>
           </Select>
         </Form.Item>
       </div>

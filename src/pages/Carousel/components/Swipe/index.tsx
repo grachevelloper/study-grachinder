@@ -13,20 +13,17 @@ const {Title} = Typography;
 interface SwipeProps {
   user: User;
   onClick: VoidFunction;
-  onLike?: (user: any) => void;
-  onDislike?: (user: any) => void;
   isActive?: boolean;
+  swipeDirection?: 'like' | 'dislike' | null;
 }
 
 export const Swipe = ({
   user,
-  onLike: _onLike,
-  onDislike: _onDislike,
   onClick,
   isActive = false,
+  swipeDirection = null,
 }: SwipeProps) => {
   const {t} = useTranslation('carousel');
-  const [direction, _setDirection] = useState<'like' | 'dislike' | null>(null);
 
   if (!user) {
     return (
@@ -39,7 +36,7 @@ export const Swipe = ({
   return (
     <Flex vertical className={styles.container} onClick={onClick}>
       <div
-        className={`${styles.animWrapper} ${direction === 'like' ? styles.swipeTop : ''} ${direction === 'dislike' ? styles.swipeBottom : ''}`}
+        className={`${styles.animWrapper} ${swipeDirection === 'like' ? styles.swipeBottom : ''} ${swipeDirection === 'dislike' ? styles.swipeTop : ''}`}
       >
         <UserCard user={user} isActive={isActive} />
       </div>

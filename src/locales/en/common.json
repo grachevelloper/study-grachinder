@@ -3,6 +3,10 @@
   "back": "Back",
   "optional": "Optional",
   "like": "Like",
+  "dislike": "Skip",
+  "match.title": "It's a Match!",
+  "match.description": "You and {{name}} liked each other.",
+  "match.close": "Close",
   "finish": "Finish",
   "saved": "Saved",
   "preview.empty": "Fill in your profile information to see the preview",
@@ -22,6 +26,11 @@
   "error.auth.title": "Sign in failed",
   "error.auth.description": "Could not complete the operation. Please try again.",
   "error.auth.retry": "Try again",
+
+  "like.contacts_title": "{{name}}'s contacts",
+  "like.no_contacts": "{{name}} hasn't shared any contacts",
+  "like.waiting_message": "You cannot view more profiles until {{name}} responds to you",
+  "like.close": "Got it",
 
   "not_found.title": "Page not found",
   "not_found.description": "It may have been deleted or you followed an incorrect link.",

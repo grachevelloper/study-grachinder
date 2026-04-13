@@ -1,4 +1,4 @@
-import {ArrowLeftOutlined, UserOutlined} from '@ant-design/icons';
+import {ArrowLeftOutlined, LogoutOutlined, UserOutlined} from '@ant-design/icons';
 import {Button, Col, Flex, Image, Row, theme} from 'antd';
 import {Fragment} from 'react';
 import {useTranslation} from 'react-i18next';
@@ -7,7 +7,8 @@ import {Navigate, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import styles from './base-layout.module.css';
 
 import layoutImg from '~assets/layout.png';
-import {getToken} from '~shared/config/api';
+import {getToken, removeToken} from '~shared/config/api';
+import {queryClient} from '~shared/api';
 
 export const BaseLayout = () => {
   const navigate = useNavigate();
@@ -27,6 +28,12 @@ export const BaseLayout = () => {
     i18n.changeLanguage(i18n.language === 'ru' ? 'en' : 'ru');
   };
 
+  const handleLogout = () => {
+    removeToken();
+    queryClient.clear();
+    navigate('/auth/signin');
+  };
+
   return (
     <Fragment>
       <Flex align='center' gap={4} className={styles.header}>
@@ -37,6 +44,14 @@ export const BaseLayout = () => {
         >
           {i18n.language === 'ru' ? 'EN' : 'RU'}
         </Button>
+        {isProfile && (
+          <Button
+            type='text'
+            className={styles.icon_btn}
+            icon={<LogoutOutlined style={{color: colorPrimary, fontSize: 16}} />}
+            onClick={handleLogout}
+          />
+        )}
         <Button
           type='text'
           className={styles.icon_btn}

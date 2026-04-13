@@ -1,23 +1,27 @@
 .layout {
-    height: auto;
-    min-height: 100vh;
+    height: 100dvh;
     width: 100%;
     position: relative;
-    flex-wrap: nowrap; 
-    padding-bottom: 50px;
+    flex-wrap: nowrap;
+    overflow: hidden;
 }
-.children_wrapper{
+
+.children_wrapper {
     height: 100%;
     width: 100%;
+    overflow: auto;
 }
 
-.children{
+.children {
     width: 100%;
+    min-height: 100%;
+     overflow: auto;
 }
 
-.image_wrapper{
-    height: 100vh;
+.image_wrapper {
+    height: 100dvh;
     width: 275px;
+    flex-shrink: 0;
 }
 
 @media (max-width: 1200px){

@@ -1,5 +1,4 @@
-import {Flex, message, Typography} from 'antd';
-import classNames from 'classnames';
+import {Flex, message, theme, Typography} from 'antd';
 import {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
@@ -31,11 +30,23 @@ export const ProfileInterests = ({
   onEditEnd,
 }: ProfileInterestsProps) => {
   const {t} = useTranslation(['auth', 'common']);
+  const {token: {colorPrimary, colorPrimaryBg, colorPrimaryBorder}} = theme.useToken();
   const [selected, setSelected] = useState<number[]>([]);
   const updateInterests = useUpdateInterests();
 
   useEffect(() => {
-    if (isEditing) setSelected(user?.interest_ids ?? []);
+    if (!isEditing) return;
+    if (user?.interest_ids?.length) {
+      setSelected(user.interest_ids);
+    } else if (user?.interests?.length) {
+      // Server returned interest names — resolve back to IDs
+      const nameToId = Object.fromEntries(
+        Object.entries(interestsMap).map(([id, name]) => [name, Number(id)])
+      );
+      setSelected(user.interests.map((name) => nameToId[name]).filter(Boolean));
+    } else {
+      setSelected([]);
+    }
   }, [isEditing]);
 
   const toggle = (id: number) =>
@@ -72,9 +83,13 @@ export const ProfileInterests = ({
               <InterestTag
                 key={id}
                 name={name}
-                className={classNames(styles.interestTag, {
-                  [styles.interestSelected]: isSelected,
-                })}
+                className={styles.interestTag}
+                style={isSelected ? {
+                  backgroundColor: colorPrimaryBg,
+                  borderColor: colorPrimaryBorder,
+                  color: colorPrimary,
+                  fontWeight: 600,
+                } : undefined}
                 onClick={() => toggle(numId)}
               />
             );
@@ -86,6 +101,10 @@ export const ProfileInterests = ({
               name={String(interestsMap[id] ?? id)}
               className={styles.interestTag}
             />
+          ))
+        ) : user?.interests?.length ? (
+          user.interests.map((name) => (
+            <InterestTag key={name} name={name} className={styles.interestTag} />
           ))
         ) : (
           <Text className={styles.empty}>{notSpecified}</Text>

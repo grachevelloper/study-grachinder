@@ -145,9 +145,7 @@ export const ProfileChurch = ({
               {t('auth.baptism_info.city_label')}
             </Text>
             <Text className={styles.fieldValue}>
-              {user?.city_id && citiesMap[user.city_id] ? (
-                citiesMap[user.city_id]
-              ) : (
+              {user?.city_id ? (citiesMap[user.city_id] ?? user.city) : user?.city ? user.city : (
                 <span className={styles.empty}>{notSpecified}</span>
               )}
             </Text>

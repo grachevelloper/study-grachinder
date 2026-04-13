@@ -26,12 +26,17 @@ export const SectionHeader = ({
     <Text className={styles.sectionLabel}>{label}</Text>
     {isEditing ? (
       <Flex gap={6}>
-        <Button size='small' icon={<CloseOutlined />} onClick={onCancel} />
         <Button
           size='small'
-          type='primary'
+          color='default'
           variant='filled'
+          icon={<CloseOutlined />}
+          onClick={onCancel}
+        />
+        <Button
+          size='small'
           color='primary'
+          variant='filled'
           icon={<CheckOutlined />}
           onClick={onSave}
           loading={loading}
@@ -39,10 +44,9 @@ export const SectionHeader = ({
       </Flex>
     ) : (
       <Button
-        type='text'
         size='small'
-        variant='filled'
         color='primary'
+        variant='filled'
         icon={<EditOutlined />}
         onClick={onEdit}
         className={styles.editBtn}

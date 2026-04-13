@@ -1,10 +1,11 @@
-.onboarding{
+.onboarding {
     width: 100%;
+    min-height: 100%;
     position: relative;
 }
 
-@media(min-width: 1200px){
-  .onboarding{
-    padding: 0 20px;
-  }
+@media (min-width: 1200px) {
+    .onboarding {
+        padding: 0 20px;
+    }
 }
