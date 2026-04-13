@@ -174,12 +174,7 @@ export const ProfileHero = ({
                 placeholder={t('auth.main_info.gender_placeholder')}
               >
                 <Option value='male'>{t('auth.main_info.gender_male')}</Option>
-                <Option value='female'>
-                  {t('auth.main_info.gender_female')}
-                </Option>
-                <Option value='other'>
-                  {t('auth.main_info.gender_other')}
-                </Option>
+                <Option value='female'>{t('auth.main_info.gender_female')}</Option>
               </Select>
             </Form.Item>
           </Flex>
@@ -228,8 +223,10 @@ export const ProfileHero = ({
             )}
             {user?.gender && (
               <Tag icon={<UserOutlined />}>
-                {/* @ts-expect-error - динамический ключ i18n */}
-                {t(`auth.main_info.gender_${user.gender.toLowerCase()}`)}
+                {({
+                  male: t('auth.main_info.gender_male'),
+                  female: t('auth.main_info.gender_female'),
+                } as Record<string, string>)[user.gender.toLowerCase()] ?? user.gender}
               </Tag>
             )}
           </Flex>

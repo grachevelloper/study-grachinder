@@ -1,5 +1,4 @@
 import {Flex, Typography} from 'antd';
-import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
 
 import styles from './swipe.module.css';
